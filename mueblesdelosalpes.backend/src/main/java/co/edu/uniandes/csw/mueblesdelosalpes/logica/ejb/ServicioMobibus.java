@@ -10,11 +10,13 @@ import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioMobibusL
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.mueblesdelosalpes.persistencia.mock.ServicioPersistenciaMock;
 import java.util.List;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author pa.sarmiento10
  */
+@Stateless
 public class ServicioMobibus implements IServicioMobibusLocal{
 
     private IServicioPersistenciaMockLocal persistencia;

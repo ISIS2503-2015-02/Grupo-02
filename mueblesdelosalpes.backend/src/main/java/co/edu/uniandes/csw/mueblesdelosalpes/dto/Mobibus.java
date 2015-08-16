@@ -42,10 +42,7 @@ public class Mobibus {
         
     }
 
-    public Mobibus(String string, double d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+   
     
     public String getNombre()
     {

@@ -30,6 +30,7 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class VcubService {
+    
     @EJB
     private IServicioVcubLocal vcubEjb;
     
@@ -41,7 +42,7 @@ public class VcubService {
     }
     
     @PUT
-    @Path("vcubes/{id}")
+    @Path("vcubes/{id}/alquilar")
     public void alquilarVcub(@PathParam("id") int id)
     {
         try {
@@ -51,7 +52,7 @@ public class VcubService {
         }
     }
      @PUT
-    @Path("vcubes/{id}")
+    @Path("vcubes/{id}/liberar")
     public void liberarVcub(@PathParam("id") int id)
     {
         try {

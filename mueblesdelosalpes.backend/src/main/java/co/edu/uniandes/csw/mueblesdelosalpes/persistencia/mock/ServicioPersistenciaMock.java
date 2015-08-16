@@ -104,7 +104,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 Mobibus m= new Mobibus("mobibus"+i, 4.598948+i, -74.080833, 56+i, "ss");
            
                
-                //Tranvia x = new Tranvia("tranvia"+i, ruta, 4.598889+i, -74.080833+i, 3, 3, 3) ;
+              
                 
                 mobibuses.add(m);
                 
@@ -422,6 +422,11 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
              System.out.println("esta vacias");
               System.out.println("tranvias");
             return tranvias;
+        
+        } 
+         if (c.equals(Mobibus.class))
+        {
+            return mobibuses;
         
         } 
         System.out.println("no reconoce clase");

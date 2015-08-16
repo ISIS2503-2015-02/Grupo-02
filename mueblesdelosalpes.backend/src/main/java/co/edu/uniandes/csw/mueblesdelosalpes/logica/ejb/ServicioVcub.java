@@ -11,11 +11,13 @@ import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioPersiste
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioVcubLocal;
 import co.edu.uniandes.csw.mueblesdelosalpes.persistencia.mock.ServicioPersistenciaMock;
 import java.util.List;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author s.correa12
  */
+@Stateless
 public class ServicioVcub implements IServicioVcubLocal
 {
     
