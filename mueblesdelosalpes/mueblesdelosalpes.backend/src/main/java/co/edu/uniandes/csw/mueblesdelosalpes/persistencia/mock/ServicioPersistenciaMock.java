@@ -80,6 +80,8 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         
         if(tranvias== null)
         {
+            System.out.println("entro fdsuhnfhuds");
+            
             tranvias=new ArrayList<Tranvia>() ;
             
             for(int i = 0 ; i<250 ; i++)
@@ -101,7 +103,9 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 }
                 
                 
+                Tranvia x = new Tranvia("tranvia"+i, ruta, 4.598889+i, -74.080833+i, 3, 3, 3) ;
                 
+                tranvias.add(x);
                 
             }
             
@@ -334,6 +338,15 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     @Override
     public List findAll(Class c)
     {
+        
+        if (c.equals(Tranvia.class))
+        {
+             System.out.println("esta vacias");
+              System.out.println("tranvias");
+            return tranvias;
+        
+        } 
+        System.out.println("no reconoce clase");
         if (c.equals(Mueble.class))
         {
             return muebles;
