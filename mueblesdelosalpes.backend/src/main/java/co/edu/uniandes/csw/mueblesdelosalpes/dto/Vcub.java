@@ -11,4 +11,6 @@ package co.edu.uniandes.csw.mueblesdelosalpes.dto;
  */
 public class Vcub {
     
+    private int id;
+    
 }
