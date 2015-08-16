@@ -13,4 +13,30 @@ public class Vcub {
     
     private int id;
     
+    private boolean ocupado;
+
+    public Vcub(int id) {
+        this.id = id;
+        ocupado=false;
+    }
+
+    
+    
+    public int getId() {
+        return id;
+    }
+
+    public boolean isOcupado() {
+        return ocupado;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setOcupado(boolean ocupado) {
+        this.ocupado = ocupado;
+    }
+
+    
 }
