@@ -89,9 +89,9 @@ public class Mobibus {
        posicionLatitud=pPos;
     }
     
-    public void setKilometraje(double pKilometraje)
+    public void setKilometraje(double pKilometrajee)
     {
-        kilometraje=pKilometraje;
+        kilometraje=pKilometrajee;
     }
     
     public void setReservado(boolean pReservado)
