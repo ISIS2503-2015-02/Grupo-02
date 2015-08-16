@@ -21,6 +21,7 @@ import co.edu.uniandes.csw.mueblesdelosalpes.dto.TipoUsuario;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Tranvia;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Usuario;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Vcub;
+import co.edu.uniandes.csw.mueblesdelosalpes.dto.Mobibus;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Vendedor;
 import co.edu.uniandes.csw.mueblesdelosalpes.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioPersistenciaMockLocal;
@@ -73,6 +74,13 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
      */
     private static ArrayList<Vcub> vcubes;
     
+     /**
+     * Lista con los Vcubs
+     */
+    private static ArrayList<Mobibus> mobibuses;
+    
+    
+    
 
     //-----------------------------------------------------------
     // Constructor
@@ -83,6 +91,25 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
      */
     public ServicioPersistenciaMock()
     {
+        if(mobibuses== null)
+        {
+            System.out.println("entro mobi");
+            
+            mobibuses=new ArrayList<Mobibus>() ;
+            
+            for(int i = 0 ; i<250 ; i++)
+            {
+                
+            
+                Mobibus m= new Mobibus("mobibus"+i, 4.598948+i, -74.080833, 56+i, "ss");
+           
+               
+                //Tranvia x = new Tranvia("tranvia"+i, ruta, 4.598889+i, -74.080833+i, 3, 3, 3) ;
+                
+                mobibuses.add(m);
+                
+            }
+        }
         
         if(vcubes==null)
         {

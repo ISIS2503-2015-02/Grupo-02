@@ -23,10 +23,10 @@ public class Mobibus {
     
     private boolean reservado;
     
-    private Date fechaReservacion;
+    private String fechaReservacion;
 
 
-    public Mobibus(String nombreP,double posicionLatitudP, double posicionLongitudP,double pKilometraje, Date pFecha)
+    public Mobibus(String nombreP,double posicionLatitudP, double posicionLongitudP,double pKilometraje, String pFecha)
     {
      nombre=nombreP;
      
@@ -40,6 +40,10 @@ public class Mobibus {
      
      fechaReservacion=pFecha;
         
+    }
+
+    public Mobibus(String string, double d) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     
@@ -69,7 +73,7 @@ public class Mobibus {
         
     }
 
-    public Date getFechaReservacion()
+    public String getFechaReservacion()
     {
         return fechaReservacion;
     }
@@ -100,7 +104,7 @@ public class Mobibus {
         
     }
 
-    public void setFechaReservacion(Date pFecha)
+    public void setFechaReservacion(String pFecha)
     {
      fechaReservacion=pFecha;
     }
