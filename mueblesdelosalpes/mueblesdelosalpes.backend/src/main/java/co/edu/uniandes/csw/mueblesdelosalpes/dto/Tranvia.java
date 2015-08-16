@@ -31,6 +31,68 @@ public class Tranvia {
         
     }
     
+    public String getNombre()
+    {
+        return nombre;
+    }
+    
+    
+    public String getLinea()
+    {
+        return linea;
+    }
+    
+    public String getposicion()
+    {
+        return posicion;
+    }
+    
+    
+    public int getNivelChoque()
+    {
+        return nivelChoque;
+    }
+    
+     public int getNivelPanico()
+    {
+        return nivelPanico;
+    }
+     public int getNivelTemparatura()
+    {
+        return nivelTemperatura;
+    }
+    
+     public void setNombre(String pNombre)
+    {
+       nombre=pNombre;
+    }
+    
+    
+   
+     public void setLinea(String pLinea)
+    {
+       linea=pLinea;
+    }
+    
+ 
+     public void setPosicion(String pPos)
+    {
+       posicion=pPos;
+    }
+    
+    public void setNivelChoque(int pChoque)
+    {
+         nivelChoque=pChoque;
+    }
+    
+     public void setNivelPanico(int pPanico)
+    {
+        nivelPanico=pPanico;
+    }
+     public void setNivelTemparatura(int pTemperatura)
+    {
+       nivelTemperatura=pTemperatura;
+    }
     
     
     
