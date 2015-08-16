@@ -18,6 +18,7 @@ import co.edu.uniandes.csw.mueblesdelosalpes.dto.Mueble;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.RegistroVenta;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.TipoMueble;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.TipoUsuario;
+import co.edu.uniandes.csw.mueblesdelosalpes.dto.Tranvia;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Usuario;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Vendedor;
 import co.edu.uniandes.csw.mueblesdelosalpes.excepciones.OperacionInvalidaException;
@@ -60,6 +61,12 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
      * Lista con los registros de ventas
      */
     private static ArrayList<RegistroVenta> registrosVentas;
+    
+    
+    //lista de los tranvias
+    
+    private static ArrayList<Tranvia> tranvias;
+    
 
     //-----------------------------------------------------------
     // Constructor
@@ -70,6 +77,39 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
      */
     public ServicioPersistenciaMock()
     {
+        
+        if(tranvias== null)
+        {
+            tranvias=new ArrayList<Tranvia>() ;
+            
+            for(int i = 0 ; i<250 ; i++)
+            {
+                int linea=(int)Math.random()*3;
+                
+                String ruta="";
+                
+                if(linea==1)
+                {
+                    ruta="A";
+                }
+                if(linea==2)
+                {
+                    ruta="B";
+                }
+                else{
+                    ruta="C";
+                }
+                
+                
+                
+                
+            }
+            
+            
+        }
+        
+        
+        
         if (vendedores == null)
         {
             vendedores = new ArrayList();
