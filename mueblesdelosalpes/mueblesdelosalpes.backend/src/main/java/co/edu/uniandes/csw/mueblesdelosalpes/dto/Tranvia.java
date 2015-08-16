@@ -15,7 +15,9 @@ public class Tranvia {
     
     private String linea ;
     
-    private String posicion ;
+    private int posicionLatitud ;
+    
+    private int posicionLongitud ;
     
     private int nivelChoque;
     
@@ -42,11 +44,15 @@ public class Tranvia {
         return linea;
     }
     
-    public String getposicion()
+    public int getposicionLatitud()
     {
-        return posicion;
+        return posicionLatitud;
     }
     
+    public int getposicionLongitud()
+    {
+        return posicionLongitud;
+    } 
     
     public int getNivelChoque()
     {
@@ -75,11 +81,16 @@ public class Tranvia {
     }
     
  
-     public void setPosicion(String pPos)
+     public void setPosicionLongitud(int pPos)
     {
-       posicion=pPos;
+       posicionLongitud=pPos;
     }
     
+     public void setPosicionLatitud(int pPos)
+    {
+       posicionLatitud=pPos;
+    }
+     
     public void setNivelChoque(int pChoque)
     {
          nivelChoque=pChoque;
