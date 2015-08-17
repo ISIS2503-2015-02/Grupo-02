@@ -8,7 +8,7 @@
  function prueba()
     {
         
-         
+         var mapa="";
                 
                 $.ajax({
                     url: '../mueblesdelosalpes.servicios/webresources/Tranvia/tranvias',
@@ -17,13 +17,11 @@
                     contentType: 'application/json',
                 }).done(function(data) {
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                   
+                    beaches=data ;
+                    initMap();
+                   
+                 
                     
                 
                     console.log(data);
@@ -33,3 +31,56 @@
         
         
     }
+    
+    
+    
+    
+    function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 11    ,
+    center: {lat: 4.7, lng: -74.02}
+  });
+
+  setMarkers(map);
+}
+
+// Data for the markers consisting of a name, a LatLng and a zIndex for the
+// order in which these markers should display on top of each other.
+var beaches = null ;
+
+var shapes = {
+    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+    type: 'poly'
+  };
+function setMarkers(map) {
+ 
+  // Shapes define the clickable region of the icon. The type defines an HTML
+  // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+  // The final coordinate closes the poly by connecting to the first coordinate.
+  
+   $.each(beaches, function(index,value){
+          var latitud= value.posicionLatitud;
+              var longitud=value.posicionLongitud;
+       var marker = new google.maps.Marker({
+      position: {lat: latitud, lng: longitud},
+      map: map,
+      title: value.nombre,
+      shape:shapes,
+      zIndex: index
+      
+    });
+    
+    var infowindow = new google.maps.InfoWindow({
+    content: value.nombre
+  });
+  
+  marker.addListener('click', function() {
+    infowindow.open(map, marker);
+  });
+       
+   });
+  
+ 
+}
+    
+    

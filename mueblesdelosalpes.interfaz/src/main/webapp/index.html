@@ -38,7 +38,16 @@
 
 
 
-
+<style>
+      html, body {
+        height: 650px;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 430px;
+      }
+    </style>
 
 
 <html lang="en" ng-app="angularTodo">
@@ -48,6 +57,46 @@
 <button name="prueba" id="prueba" onclick="prueba(); return false;"> prueba </button>
     
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+    <div id="map" height="400"  ></div> 
+    
+    
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap"></script>
+    
+   
+  </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
