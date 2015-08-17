@@ -20,6 +20,8 @@ import co.edu.uniandes.csw.mueblesdelosalpes.dto.TipoMueble;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.TipoUsuario;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Tranvia;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Usuario;
+import co.edu.uniandes.csw.mueblesdelosalpes.dto.Vcub;
+import co.edu.uniandes.csw.mueblesdelosalpes.dto.Mobibus;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Vendedor;
 import co.edu.uniandes.csw.mueblesdelosalpes.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioPersistenciaMockLocal;
@@ -67,6 +69,18 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     
     private static ArrayList<Tranvia> tranvias;
     
+    /**
+     * Lista con los Vcubs
+     */
+    private static ArrayList<Vcub> vcubes;
+    
+     /**
+     * Lista con los Vcubs
+     */
+    private static ArrayList<Mobibus> mobibuses;
+    
+    
+    
 
     //-----------------------------------------------------------
     // Constructor
@@ -77,6 +91,35 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
      */
     public ServicioPersistenciaMock()
     {
+        if(mobibuses== null)
+        {
+            System.out.println("entro mobi");
+            
+            mobibuses=new ArrayList<Mobibus>() ;
+            
+            for(int i = 0 ; i<250 ; i++)
+            {
+                
+            
+                Mobibus m= new Mobibus("mobibus"+i, 4.598948+i, -74.080833, 56+i, "ss");
+           
+               
+              
+                
+                mobibuses.add(m);
+                
+            }
+        }
+        
+        if(vcubes==null)
+        {
+            vcubes = new ArrayList<Vcub>();
+            for(int b=0;b<4000;b++)
+            {
+                Vcub nuevo = new Vcub(b);
+                vcubes.add(nuevo);
+            }
+        }
         
         if(tranvias== null)
         {
@@ -226,6 +269,13 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         {
             registrosVentas.add((RegistroVenta) obj);
         }
+        else if(obj instanceof Vcub)
+        {
+            Vcub v = (Vcub) obj;
+            v.setId(vcubes.size()+1);
+            v.setOcupado(false);
+            vcubes.add(v);
+        }
     }
 
     /**
@@ -276,6 +326,20 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 if (usuario.getLogin().equals(editar.getLogin()))
                 {
                     usuarios.set(i, editar);
+                    break;
+                }
+            }
+        }
+          else if (obj instanceof Vcub)
+        {
+            Vcub editar = (Vcub) obj;
+            Vcub vc;
+            for (int i = 0; i < vcubes.size(); i++)
+            {
+                vc = vcubes.get(i);
+                if (vc.getId() == editar.getId())
+                {
+                    vcubes.set(i, editar);
                     break;
                 }
             }
@@ -345,6 +409,20 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 }
             }
         }
+           else if (obj instanceof Vcub)
+        {
+            Vcub eliminar = (Vcub) obj;
+            Vcub vc;
+            for (int i = 0; i < vcubes.size(); i++)
+            {
+                vc = vcubes.get(i);
+                if (vc.getId() == eliminar.getId())
+                {
+                    vcubes.remove(i);
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -361,6 +439,11 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
              System.out.println("esta vacias");
               System.out.println("tranvias");
             return tranvias;
+        
+        } 
+         if (c.equals(Mobibus.class))
+        {
+            return mobibuses;
         
         } 
         System.out.println("no reconoce clase");
@@ -380,6 +463,10 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         {
             return registrosVentas;
         } 
+        else if(c.equals(Vcub.class))
+        {
+            return vcubes;
+        }
         else
         {
             return null;
@@ -425,6 +512,16 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 if (mue.getLogin().equals(id))
                 {
                     return mue;
+                }
+            }
+        }
+        else if(c.equals(Vcub.class)){
+            for(Object v:findAll(c))
+            {
+                Vcub vc = (Vcub)v;
+                if(vc.getId()==Integer.parseInt(id.toString()))
+                {
+                    return vc;
                 }
             }
         }
