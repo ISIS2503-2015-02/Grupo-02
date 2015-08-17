@@ -86,7 +86,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             
             for(int i = 0 ; i<250 ; i++)
             {
-                int linea=(int)Math.random()*3;
+                int linea=(int)(Math.random()*3);
                 
                 String ruta="";
                 
@@ -101,9 +101,26 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 else{
                     ruta="C";
                 }
+                double numero=0;
+                double numero2=0;
                 
-                
-                Tranvia x = new Tranvia("tranvia"+i, ruta, 4.598889+i, -74.080833+i, 3, 3, 3) ;
+                if(linea==1)
+                {
+                      numero=(Math.random()*0.41)+4.43;
+                 numero2=0-74.068;
+                    
+                }
+                if(linea==2)
+                {
+                      numero=4.63;
+                 numero2=(Math.random()*(-0.213))-74.001;
+                }
+                if(linea==3 || linea==0){
+                      numero=4.69;
+                 numero2=(Math.random()*(-0.213))-74.001;
+                }
+               
+                Tranvia x = new Tranvia("tranvia"+(i), ruta, numero, numero2, 3, 3, 3) ;
                 
                 tranvias.add(x);
                 
