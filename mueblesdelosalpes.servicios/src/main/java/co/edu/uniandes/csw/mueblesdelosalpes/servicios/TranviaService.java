@@ -8,13 +8,15 @@ package co.edu.uniandes.csw.mueblesdelosalpes.servicios;
 
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Tranvia;
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioTranviaLocal;
-import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioUsuarioMockLocal;
+
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -44,6 +46,16 @@ public class TranviaService {
  
     }
     
+    
+    @PUT
+    @Path("tranvias/cambiar/{id}/{emergencia}/{valor}")
+    
+    public void cambiarNiveleDeEmergencia(@PathParam("id")String id ,@PathParam("emergencia") int emergenci , @PathParam("valor")int valor)
+    {
+        
+        tranviaEjb.cambiarEstado(id, emergenci, valor);
+        
+    }
     
     
     

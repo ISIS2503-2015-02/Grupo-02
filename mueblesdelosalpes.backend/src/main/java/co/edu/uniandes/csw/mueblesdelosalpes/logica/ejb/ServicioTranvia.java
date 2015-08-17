@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.mueblesdelosalpes.logica.ejb;
 
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Tranvia;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Usuario;
+import co.edu.uniandes.csw.mueblesdelosalpes.dto.Vcub;
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioTranviaLocal;
 import co.edu.uniandes.csw.mueblesdelosalpes.persistencia.mock.ServicioPersistenciaMock;
@@ -41,6 +42,35 @@ public class ServicioTranvia implements IServicioTranviaLocal{
      return persistencia.findAll(Tranvia.class);
     
     }
+
+    @Override
+    public void cambiarEstado(String id, int emergencia, int valor) {
+       
+   Tranvia tranvia =(Tranvia) persistencia.findById(Tranvia.class, id);
+        
+         //modifico el nivel de choque
+        if(emergencia==1)
+        {
+            tranvia.setNivelChoque(valor);
+            
+        }
+        
+        //modifico el nivel de temperatura
+        if(emergencia==2)
+        {
+            tranvia.setNivelTemparatura(valor);
+        }
+        
+        // el boton de panico
+        else{
+            
+            tranvia.setNivelPanico(valor);
+            
+        }
+        
+    }
+
+   
     
     
     

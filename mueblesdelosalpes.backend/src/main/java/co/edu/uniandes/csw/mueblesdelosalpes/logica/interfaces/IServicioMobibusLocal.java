@@ -19,4 +19,7 @@ import javax.ejb.Local;
 
 public interface IServicioMobibusLocal {
      public List<Mobibus> darMobibuses();
+     
+     public Mobibus darMobibusMasCercano(double cordenada1, double cordenada2);
+     
 }

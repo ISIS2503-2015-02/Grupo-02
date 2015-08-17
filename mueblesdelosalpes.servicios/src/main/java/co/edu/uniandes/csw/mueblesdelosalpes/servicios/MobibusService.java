@@ -15,6 +15,7 @@ import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -43,7 +44,15 @@ public class MobibusService {
  
     }
     
+    @GET
+    @Path("mobibuses/{coordenada1}/{coordenada2}")
     
+    public Mobibus darMobiBusMasCercanoA(@PathParam("coordenada1") double coordenada1,@PathParam("coordenada2")double coordenada2)
+    {
+        
+        return mobibusEjb.darMobibusMasCercano(coordenada1, coordenada2);
+        
+    }
     
     
 }

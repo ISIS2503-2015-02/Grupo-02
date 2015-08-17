@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.mueblesdelosalpes.dto.Mobibus;
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioMobibusLocal;
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.mueblesdelosalpes.persistencia.mock.ServicioPersistenciaMock;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 
@@ -32,6 +33,35 @@ public class ServicioMobibus implements IServicioMobibusLocal{
       //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         System.out.println("pide los mobibuses");
      return persistencia.findAll(Mobibus.class);
+    }
+
+    @Override
+    public Mobibus darMobibusMasCercano(double cordenada1, double cordenada2) {
+    
+        List<Mobibus> lista = darMobibuses();
+        
+        Mobibus rta=null;
+        
+        double menorDistanciaEncontrada =10000000;
+        
+        for(Mobibus m:lista)
+        {
+           double latitud= m.getposicionLatitud();
+           double longitud=m.getposicionLongitud();
+           
+           double distancia= Math.sqrt((cordenada1-latitud)*(cordenada1-latitud)+(cordenada2-longitud)*(cordenada2-longitud));
+           
+           if(distancia<menorDistanciaEncontrada)
+           {
+               menorDistanciaEncontrada=distancia;
+               rta=m;
+           }
+            
+            
+        }
+                
+        return rta;
+    
     }
     
 }

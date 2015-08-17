@@ -21,6 +21,8 @@ public interface IServicioTranviaLocal {
     
     public List<Tranvia> darTranvias();
     
+    public void cambiarEstado(String id, int emergencia , int valor);
+    
     
     
 }

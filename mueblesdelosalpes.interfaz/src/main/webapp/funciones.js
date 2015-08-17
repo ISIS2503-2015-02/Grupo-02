@@ -61,11 +61,29 @@ function setMarkers(map) {
    $.each(beaches, function(index,value){
           var latitud= value.posicionLatitud;
               var longitud=value.posicionLongitud;
+              var nivelChoque=value.nivelChoque;
+              var nivelPanico=value.nivelPanico;
+              var nivelTemperatura=value.nivelTemperatura;
+               var imagen="" ;
+              
+              if(nivelChoque>50){
+               imagen="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=caution|#00FFBF";
+          }
+          else
+          {
+             imagen="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=bus|FFFF00";
+          }
+              
+              
        var marker = new google.maps.Marker({
       position: {lat: latitud, lng: longitud},
       map: map,
       title: value.nombre,
       shape:shapes,
+     
+      icon:imagen,
+        
+
       zIndex: index
       
     });

@@ -100,8 +100,12 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             for(int i = 0 ; i<250 ; i++)
             {
                 
+               double numero = (Math.random()*0.41)+4.43;
+                
+                double numero2=(Math.random()*(-0.213))-74.001;
+                
             
-                Mobibus m= new Mobibus("mobibus"+i, 4.598948+i, -74.080833, 56+i, "ss");
+                Mobibus m= new Mobibus("mobibus"+i, numero, numero2, 56+i, "ss");
            
                
               
@@ -524,6 +528,18 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 }
             }
         }
+        
+         else if(c.equals(Tranvia.class)){
+            for(Object v:findAll(c))
+            {
+                Tranvia tranvia = (Tranvia)v;
+                if(tranvia.getNombre().equals(id.toString()))
+                {
+                    return tranvia; 
+                }
+            }
+        }
+        
         return null;
     }
 }
