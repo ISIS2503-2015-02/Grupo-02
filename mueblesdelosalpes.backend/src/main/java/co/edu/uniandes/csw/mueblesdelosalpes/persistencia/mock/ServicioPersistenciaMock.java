@@ -123,7 +123,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         
         if(tranvias== null)
         {
-            System.out.println("entro fdsuhnfhuds");
+           
             
             tranvias=new ArrayList<Tranvia>() ;
             
