@@ -436,8 +436,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         
         if (c.equals(Tranvia.class))
         {
-             System.out.println("esta vacias");
-              System.out.println("tranvias");
+            
             return tranvias;
         
         } 
@@ -446,7 +445,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             return mobibuses;
         
         } 
-        System.out.println("no reconoce clase");
+       
         if (c.equals(Mueble.class))
         {
             return muebles;

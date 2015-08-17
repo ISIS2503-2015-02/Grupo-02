@@ -37,7 +37,7 @@ public class ServicioTranvia implements IServicioTranviaLocal{
     
     public List<Tranvia> darTranvias() {
     
-        System.out.println("pide los tranvia");
+     
      return persistencia.findAll(Tranvia.class);
     
     }
