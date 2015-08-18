@@ -18,8 +18,8 @@
                 }).done(function(data) {
                     
                    
-                    beaches=data ;
-                    verRutasTranvia();
+                    
+                    verRutasTranvia(data);
                    
                  
                     
@@ -32,6 +32,103 @@
         
     }
     
+    
+    function crearMapaMobibuses(data)
+    {
+          var map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 11    ,
+                  center: {lat: 4.598889 , lng:  -74.080833}
+                });
+                
+                
+      
+   
+    
+                marcarMobibuses(map,data);
+    }
+    
+    
+    function verMobibusesMasCercanoUsuario(){
+        
+          if (navigator.geolocation) {
+         //pongo en el parametro el nombre que quiera utilizar 
+        navigator.geolocation.getCurrentPosition(ubicacion);
+        
+          }
+        
+    }
+    
+    
+    function marcarMobibuses(map,data)
+    {
+        
+        $.each(data, function(index,value){
+          var latitud= value.posicionLatitud;
+              var longitud=value.posicionLongitud;
+              
+               var imagen="" ;
+              var contenido="";
+              
+    
+          
+             contenido=value.nombre;
+             imagen="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=bus|FFFF00";
+          
+              
+              
+       var marker = new google.maps.Marker({
+      position: {lat: latitud, lng: longitud},
+      map: map,
+      title: value.nombre,
+      shape:shapes,
+     
+      icon:imagen,
+        
+
+      zIndex: index
+      
+    });
+    
+    var infowindow = new google.maps.InfoWindow({
+    content:contenido 
+        });
+  
+  marker.addListener('click', function() {
+    infowindow.open(map, marker);
+  });
+       
+   });
+        
+        
+    }
+    
+    function verMobibuses()
+    {
+        
+        $.ajax({
+                    url: '../mueblesdelosalpes.servicios/webresources/mobibus/mobibuses',
+                    type : "GET",
+                  
+                    contentType: 'application/json',
+                }).done(function(data) {
+                    
+                   
+                    crearMapaMobibuses(data);
+                    
+                   
+                 
+                    
+                
+                    console.log(data);
+                }, this).error(function(data) {
+                    alert(data);
+                }, this);
+        
+        
+        
+        
+        
+    }
     
     function direccion( coo1,coo2 , coo3,coo4) {
   var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -58,17 +155,18 @@ function posicionActual()
 
 function ubicacion(coordenadas)
 {
-    alert(coordenadas.coords.latitude);
-     alert(coordenadas.coords.longitude);
+   
      var latitud = coordenadas.coords.latitude;
      var longitud=coordenadas.coords.longitude;
+     
+     busquedaMasCercano(latitud,longitud);
      
      //llamar al metodo que quiera con estas variables 
     
 }
 
     
-    function verRutasTranvia() {
+    function verRutasTranvia(data) {
         
         
     
@@ -83,7 +181,7 @@ function ubicacion(coordenadas)
       
    
     
-                setMarkers(map);
+                setMarkers(map,data);
         
   
 }
@@ -136,13 +234,13 @@ var shapes = {
       
   }
   
-function setMarkers(map) {
+function setMarkers(map,data) {
  
   // Shapes define the clickable region of the icon. The type defines an HTML
   // <area> element 'poly' which traces out a polygon as a series of X,Y points.
   // The final coordinate closes the poly by connecting to the first coordinate.
   
-   $.each(beaches, function(index,value){
+   $.each(data, function(index,value){
           var latitud= value.posicionLatitud;
               var longitud=value.posicionLongitud;
               var nivelChoque=value.nivelChoque;
