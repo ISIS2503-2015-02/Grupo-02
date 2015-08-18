@@ -19,7 +19,7 @@
                     
                    
                     beaches=data ;
-                    initMap();
+                    verRutasTranvia();
                    
                  
                     
@@ -33,15 +33,31 @@
     }
     
     
-    
-    
-    function initMap() {
+    function direccion( coo1,coo2 , coo3,coo4) {
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+  var directionsService = new google.maps.DirectionsService;
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 11    ,
-    center: {lat: 4.7, lng: -74.02}
+    zoom: 14,
+       center: {lat: coo1, lng: coo2}
   });
+  directionsDisplay.setMap(map);
 
-  setMarkers(map);
+  calculateAndDisplayRoute(directionsService, directionsDisplay,coo1,coo2,coo3,coo4);
+  
+}
+
+    
+    function verRutasTranvia() {
+        
+        
+                var map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 11    ,
+                  center: {lat: 4.7, lng: -74.02}
+                });
+
+                setMarkers(map);
+        
+  
 }
 
 // Data for the markers consisting of a name, a LatLng and a zIndex for the
@@ -52,6 +68,46 @@ var shapes = {
     coords: [1, 1, 1, 20, 18, 20, 18, 1],
     type: 'poly'
   };
+  
+  
+  function busquedaMasCercano(coordenada1,coordenada2)
+  {
+      
+      
+      
+       $.ajax({
+                    url: '../mueblesdelosalpes.servicios/webresources/mobibus/mobibuses/'+coordenada1+"/"+coordenada2,
+                    type : "GET",
+                    
+                    
+                  
+                    contentType: 'application/json',
+                }).done(function(data) {
+                    
+                   
+                    
+                          
+                          var latitud=data.posicionLatitud;
+                          var longitud = data.posicionLongitud;
+                          
+                          direccion(coordenada1,coordenada2,latitud,longitud);
+                          
+                          
+                      
+                   
+                 
+                    
+                
+                    console.log(data);
+                }, this).error(function(data) {
+                    alert(data);
+                }, this);
+        
+      
+      
+      
+  }
+  
 function setMarkers(map) {
  
   // Shapes define the clickable region of the icon. The type defines an HTML
@@ -65,12 +121,18 @@ function setMarkers(map) {
               var nivelPanico=value.nivelPanico;
               var nivelTemperatura=value.nivelTemperatura;
                var imagen="" ;
+              var contenido="";
               
-              if(nivelChoque>50){
+          if(nivelChoque>50 || nivelPanico>50 || nivelTemperatura>50)
+          {
                imagen="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=caution|#00FFBF";
+               contenido="el vehiculo "+value.nombre+" se encuentra en estado de emergencia"+"<p>"+"<button name=\"busquedaMasCercano\" id=\"busquedaMasCercano\" onclick=\"busquedaMasCercano("+latitud+","+longitud+"); return false;\"> Buscar bus mas cercano </button>";
+             
+              
           }
           else
           {
+             contenido=value.nombre;
              imagen="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=bus|FFFF00";
           }
               
@@ -89,8 +151,8 @@ function setMarkers(map) {
     });
     
     var infowindow = new google.maps.InfoWindow({
-    content: value.nombre
-  });
+    content:contenido 
+        });
   
   marker.addListener('click', function() {
     infowindow.open(map, marker);
@@ -99,6 +161,55 @@ function setMarkers(map) {
    });
   
  
+}
+
+function calculateAndDisplayRoute(directionsService, directionsDisplay , lat1,ing1,lat2,ing2) {
+  var selectedMode = "DRIVING";
+  var latitud1=lat1;
+   var longitud1=ing1;
+   var latitud2=lat2;
+    var longitud2=ing2;
+  directionsService.route({
+    origin: {lat: lat1, lng: ing1},  // Haight.
+    destination: {lat: lat2, lng: ing2},  // Ocean Beach.
+
+    // Note that Javascript allows us to access the constant
+    // using square brackets and a string value as its
+    // "property."
+    travelMode: google.maps.TravelMode[selectedMode]
+  }, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+}
+
+function cambiarEstadoTranvia()
+{
+    var identificador=document.getElementById('nombreTranvia').value;
+    var emer=document.getElementById('emergenciaTranvia').value;
+    var numero=document.getElementById('valorTranvia').value;
+    
+     $.ajax({
+                    url: '../mueblesdelosalpes.servicios/webresources/Tranvia/tranvias/cambiar/'+identificador+"/"+emer+"/"+numero,
+                    type : "PUT",
+                  
+                    contentType: 'application/json',
+                }).done(function(data) {
+                    
+                   var x =emer;
+                    
+                    verRutasTranvia();
+                   
+                 
+                    
+                
+                    console.log(data);
+                }, this).error(function(data) {
+                    alert(data);
+                }, this);
 }
     
     
