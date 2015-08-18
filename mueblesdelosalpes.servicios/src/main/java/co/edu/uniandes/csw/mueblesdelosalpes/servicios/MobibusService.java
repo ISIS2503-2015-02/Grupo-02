@@ -7,13 +7,17 @@ package co.edu.uniandes.csw.mueblesdelosalpes.servicios;
 
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Mobibus;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Tranvia;
+import co.edu.uniandes.csw.mueblesdelosalpes.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioMobibusLocal;
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioTranviaLocal;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -52,6 +56,27 @@ public class MobibusService {
         
         return mobibusEjb.darMobibusMasCercano(coordenada1, coordenada2);
         
+    }
+    
+    @PUT
+    @Path("mobibuses/{id}/alquilar")
+    public void alquilarVcub(@PathParam("id") int id)
+    {
+        try {
+            mobibusEjb.alquilarMobibus(id);
+        } catch (OperacionInvalidaException ex) {
+            Logger.getLogger(MobibusService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     @PUT
+    @Path("mobibuses/{id}/liberar")
+    public void liberarVcub(@PathParam("id") int id)
+    {
+        try {
+            mobibusEjb.liberarMobibus(id);
+        } catch (OperacionInvalidaException ex) {
+            Logger.getLogger(MobibusService.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
     
     
