@@ -15,6 +15,8 @@ public class Mobibus {
     
     private String nombre ;
     
+    private int id;
+    
     private double posicionLatitud ;
     
     private double posicionLongitud ;
@@ -26,7 +28,7 @@ public class Mobibus {
     private String fechaReservacion;
 
 
-    public Mobibus(String nombreP1,double posicionLatitudP, double posicionLongitudP,double pKilometraje, String pFecha)
+    public Mobibus(String nombreP1,double posicionLatitudP, double posicionLongitudP,double pKilometraje, String pFecha,int pID)
     {
      nombre=nombreP1;
      
@@ -39,6 +41,7 @@ public class Mobibus {
      reservado=false;
      
      fechaReservacion=pFecha;
+     id=pID;
         
     }
 
@@ -63,6 +66,12 @@ public class Mobibus {
     {
         return kilometraje;
     }
+    
+     public int getID()
+    {
+        return id;
+    }
+    
     
     public boolean getReservado()
     {
@@ -106,6 +115,9 @@ public class Mobibus {
      fechaReservacion=pFecha;
     }
 
-
+    public void setID(int pID)
+    {
+       id=pID;
+    }
 
 }

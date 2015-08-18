@@ -105,7 +105,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 double numero2=(Math.random()*(-0.213))-74.001;
                 
             
-                Mobibus m= new Mobibus("mobibus"+i, numero, numero2, 56+i, "ss");
+                Mobibus m= new Mobibus("mobibus"+i, numero, numero2, 56+i, "ss",i);
            
                
               
@@ -280,6 +280,15 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             v.setOcupado(false);
             vcubes.add(v);
         }
+        
+        else if(obj instanceof Mobibus)
+        {
+            Mobibus mb = (Mobibus) obj;
+            mb.setID(mobibuses.size()+1);
+            mb.setReservado(false);
+            mobibuses.add(mb);
+        }
+       
     }
 
     /**
@@ -344,6 +353,21 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 if (vc.getId() == editar.getId())
                 {
                     vcubes.set(i, editar);
+                    break;
+                }
+            }
+        }
+        
+        else if (obj instanceof Mobibus)
+        {
+            Mobibus editar = (Mobibus) obj;
+            Mobibus mb;
+            for (int i = 0; i < mobibuses.size(); i++)
+            {
+                mb = mobibuses.get(i);
+                if (mb.getID() == editar.getID())
+                {
+                    mobibuses.set(i, editar);
                     break;
                 }
             }
@@ -427,6 +451,21 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 }
             }
         }
+        
+        else if (obj instanceof Mobibus)
+        {
+            Mobibus eliminar = (Mobibus) obj;
+            Mobibus mb;
+            for (int i = 0; i < mobibuses.size(); i++)
+            {
+                mb = mobibuses.get(i);
+                if (mb.getID() == eliminar.getID())
+                {
+                    mobibuses.remove(i);
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -470,6 +509,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         {
             return vcubes;
         }
+       
         else
         {
             return null;
@@ -540,6 +580,16 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             }
         }
         
+        else if(c.equals(Mobibus.class)){
+            for(Object v:findAll(c))
+            {
+                Mobibus mb = (Mobibus)v;
+                if(mb.getID()==Integer.parseInt(id.toString()))
+                {
+                    return mb; 
+                }
+            }
+        }
         return null;
     }
 }
