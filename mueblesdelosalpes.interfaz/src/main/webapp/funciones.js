@@ -46,15 +46,43 @@
   
 }
 
+function posicionActual()
+{
+    
+     if (navigator.geolocation) {
+         //pongo en el parametro el nombre que quiera utilizar 
+        navigator.geolocation.getCurrentPosition(ubicacion);
+    } 
+    
+}
+
+function ubicacion(coordenadas)
+{
+    alert(coordenadas.coords.latitude);
+     alert(coordenadas.coords.longitude);
+     var latitud = coordenadas.coords.latitude;
+     var longitud=coordenadas.coords.longitude;
+     
+     //llamar al metodo que quiera con estas variables 
+    
+}
+
     
     function verRutasTranvia() {
         
         
+    
+      
+        
                 var map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 11    ,
-                  center: {lat: 4.7, lng: -74.02}
+                  center: {lat: 4.598889 , lng:  -74.080833}
                 });
-
+                
+                
+      
+   
+    
                 setMarkers(map);
         
   
@@ -211,5 +239,16 @@ function cambiarEstadoTranvia()
                     alert(data);
                 }, this);
 }
+
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+}
     
+
+   
     
+   
