@@ -26,9 +26,9 @@ public class Mobibus {
     private String fechaReservacion;
 
 
-    public Mobibus(String nombreP,double posicionLatitudP, double posicionLongitudP,double pKilometraje, String pFecha)
+    public Mobibus(String nombreP1,double posicionLatitudP, double posicionLongitudP,double pKilometraje, String pFecha)
     {
-     nombre=nombreP;
+     nombre=nombreP1;
      
      posicionLatitud=posicionLatitudP;
      
