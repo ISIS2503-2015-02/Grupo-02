@@ -25,12 +25,22 @@ public class Tranvia {
     
     private int nivelPanico ;
     
+    private double kilometraje;
     
-    public Tranvia(String nombreP, String lenaPc,double posicionLatitudP, double posicionLongitudP,int nivelChoqueP,int nivelTemperaturaP, int nivelPanicoP)
+    private String nombreConductor;
+    
+    private double tiempoTrayecto ;
+    
+    
+    public Tranvia(String nombreP, String lenaPc,double posicionLatitudP, double posicionLongitudP,int nivelChoqueP,int nivelTemperaturaP, int nivelPanicoP , double kilometrajeP , String nombreConductorP,double tiempoTrayectoP)
     {
      nombre=nombreP;
      
+     nombreConductor=nombreConductorP;
+     
      linea=lenaPc;
+     
+     kilometraje=kilometrajeP;
      
      posicionLatitud=posicionLatitudP;
      
@@ -41,12 +51,49 @@ public class Tranvia {
      nivelTemperatura=nivelTemperaturaP;
      
      nivelPanico=nivelPanicoP;
+     
+     tiempoTrayecto=tiempoTrayectoP;
+     
         
+    }
+    
+    public double getTimepoPromedio()
+    {
+        return tiempoTrayecto;
+        
+    }
+    
+    public void setTiempoProyecto(double x)
+    {
+        tiempoTrayecto=x;
+        
+    }
+    
+    
+    public String getNombreConductor(){
+    
+    return nombreConductor;
+    }
+    
+    public void setNombreConductor(String nombreConductorP)
+    {
+        
+        nombreConductor=nombreConductorP;
     }
     
     public String getNombre()
     {
         return nombre;
+    }
+    
+    public double getKilometraje()
+    {
+        return kilometraje;
+    }
+    
+    public void setKilometraje(double kilometrajeP)
+    {
+        kilometraje=kilometrajeP;
     }
     
     

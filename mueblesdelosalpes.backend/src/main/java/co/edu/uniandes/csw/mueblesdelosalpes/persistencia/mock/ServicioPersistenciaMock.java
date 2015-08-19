@@ -145,29 +145,41 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 {
                     ruta="B";
                 }
-                else{
+                if(linea==3 || linea==0){
                     ruta="C";
                 }
                 double numero=0;
                 double numero2=0;
+                double tiempoTrayecto=0;
                 
                 if(linea==1)
                 {
                       numero=(Math.random()*0.41)+4.43;
                  numero2=0-74.068;
+                 tiempoTrayecto=(Math.random()*2)+2;
                     
                 }
                 if(linea==2)
                 {
                       numero=4.63;
                  numero2=(Math.random()*(-0.213))-74.001;
+                  tiempoTrayecto=(Math.random()*1.5)+1.5;
                 }
                 if(linea==3 || linea==0){
                       numero=4.69;
                  numero2=(Math.random()*(-0.213))-74.001;
+                  tiempoTrayecto=(Math.random()*1.5)+2;
                 }
+                
+                
+                double kilometraje ;
+                
+                
+                kilometraje=Math.random()*10000+1000 ;
+                
+              String  nombreConductor="conductor"+i;
                
-                Tranvia x = new Tranvia("tranvia"+(i), ruta, numero, numero2, 3, 3, 3) ;
+                Tranvia x = new Tranvia("tranvia"+(i), ruta, numero, numero2, 3, 3, 3, kilometraje,nombreConductor,tiempoTrayecto) ;
                 
                 tranvias.add(x);
                 

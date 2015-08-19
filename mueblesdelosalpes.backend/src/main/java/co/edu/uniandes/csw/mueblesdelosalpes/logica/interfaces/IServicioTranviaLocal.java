@@ -23,6 +23,8 @@ public interface IServicioTranviaLocal {
     
     public void cambiarEstado(String id, int emergencia , int valor);
     
+    public String generarReporte();
+    
     
     
 }

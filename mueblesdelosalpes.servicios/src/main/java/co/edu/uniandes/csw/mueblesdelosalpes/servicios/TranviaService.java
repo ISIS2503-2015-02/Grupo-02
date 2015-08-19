@@ -57,6 +57,15 @@ public class TranviaService {
         
     }
     
+    @GET
+    @Path("tranvias/generarReportes")
+    public String generarReporteDeTranvias()
+    {
+        
+        return tranviaEjb.generarReporte();
+        
+    }
+    
     
     
 }

@@ -32,6 +32,7 @@
         
     }
     
+   
     
     function crearMapaMobibuses(data)
     {
@@ -173,11 +174,50 @@ function ubicacion(coordenadas)
       
         
                 var map = new google.maps.Map(document.getElementById('map'), {
-                  zoom: 11    ,
+                  zoom: 13    ,
                   center: {lat: 4.598889 , lng:  -74.080833}
                 });
                 
-                
+                var flightPlanCoordinates = [
+    {lat: 4.43, lng: -74.068},
+    {lat: 4.84, lng: -74.068}
+    
+  ];
+  var flightPlanCoordinates2 = [
+    {lat: 4.63, lng: -74.001},
+    {lat: 4.63, lng: -74.214}
+    
+  ];
+  var flightPlanCoordinates3 = [
+    {lat: 4.69, lng: -74.001},
+    {lat: 4.69, lng: -74.214}
+    
+  ];
+  var flightPath = new google.maps.Polyline({
+    path: flightPlanCoordinates,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+    var flightPath3 = new google.maps.Polyline({
+    path: flightPlanCoordinates3,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+  var flightPath2 = new google.maps.Polyline({
+    path: flightPlanCoordinates2,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+
+  flightPath.setMap(map);
+  flightPath2.setMap(map);
+  flightPath3.setMap(map);
       
    
     
@@ -233,12 +273,52 @@ var shapes = {
       
       
   }
+  function acercarEmergencia(coor1,coor2)
+  {
+     
+                $.ajax({
+                    url: '../mueblesdelosalpes.servicios/webresources/Tranvia/tranvias',
+                    type : "GET",
+                  
+                    contentType: 'application/json',
+                }).done(function(data) {
+                    
+                   
+                    
+                    acercarEmergencia2(coor1,coor2,data);
+                   
+                 
+                    
+                
+                    console.log(data);
+                }, this).error(function(data) {
+                    alert(data);
+                }, this);
+        
+  }
+  
+  function acercarEmergencia2(coor1,coor2,data)
+  {
+     var map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 15    ,
+                  center: {lat: coor1 , lng:  coor2}
+                });
+                
+                
+      
+   
+    
+                setMarkers(map,data);
+  }
   
 function setMarkers(map,data) {
  
   // Shapes define the clickable region of the icon. The type defines an HTML
   // <area> element 'poly' which traces out a polygon as a series of X,Y points.
   // The final coordinate closes the poly by connecting to the first coordinate.
+  
+  
+   document.getElementById('directionsPanel').innerHTML=" ";
   
    $.each(data, function(index,value){
           var latitud= value.posicionLatitud;
@@ -248,17 +328,20 @@ function setMarkers(map,data) {
               var nivelTemperatura=value.nivelTemperatura;
                var imagen="" ;
               var contenido="";
+                
               
           if(nivelChoque>50 || nivelPanico>50 || nivelTemperatura>50)
           {
                imagen="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=caution|#00FFBF";
                contenido="el vehiculo "+value.nombre+" se encuentra en estado de emergencia"+"<p>"+"<button name=\"busquedaMasCercano\" id=\"busquedaMasCercano\" onclick=\"busquedaMasCercano("+latitud+","+longitud+"); return false;\"> Buscar bus mas cercano </button>";
-             
-              
+             document.getElementById('directionsPanel').innerHTML+=value.nombre+" ";
+             document.getElementById('directionsPanel').innerHTML+="<button name=\"acercarEmergencia\" id=\"acercarEmergencia\" onclick=\"acercarEmergencia("+latitud+","+longitud+"); return false;\"> Buscar En el mapa </button> <p>";
           }
           else
           {
-             contenido=value.nombre;
+             contenido="Nombre Tranvia: "+value.nombre+"<p>";
+             contenido+="Conducido por: " + value.nombreConductor;
+             contenido+="Kilomatros desde ultima revicion: "+value.kilometraje;
              imagen="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=bus|FFFF00";
           }
               
@@ -270,11 +353,15 @@ function setMarkers(map,data) {
       shape:shapes,
      
       icon:imagen,
-        
+        panel: document.getElementById('directionsPanel'),
 
       zIndex: index
       
     });
+    
+    
+    
+     
     
     var infowindow = new google.maps.InfoWindow({
     content:contenido 
@@ -287,6 +374,45 @@ function setMarkers(map,data) {
    });
   
  
+}
+
+function generarReporte()
+{
+    
+    
+       $.ajax({
+                    url: '../mueblesdelosalpes.servicios/webresources/Tranvia/tranvias/generarReportes',
+                    type : "GET",
+                    
+                    
+                  
+                    dataType: 'text'
+                }).done(function(data) {
+                    
+                   
+                    
+                          
+                          var latitud=data;
+                          
+                          document.getElementById("reporte").innerHTML=latitud;
+                     
+                          
+                          
+                          
+                          
+                      
+                   
+                 
+                    
+                
+                    console.log(data);
+                }, this).error(function(data) {
+                    alert(data);
+                }, this);
+    
+    
+    
+    
 }
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay , lat1,ing1,lat2,ing2) {
