@@ -26,11 +26,11 @@ public class Tranvia {
     private int nivelPanico ;
     
     
-    public Tranvia(String nombreP, String lenaP,double posicionLatitudP, double posicionLongitudP,int nivelChoqueP,int nivelTemperaturaP, int nivelPanicoP)
+    public Tranvia(String nombreP, String lenaPc,double posicionLatitudP, double posicionLongitudP,int nivelChoqueP,int nivelTemperaturaP, int nivelPanicoP)
     {
      nombre=nombreP;
      
-     linea=lenaP;
+     linea=lenaPc;
      
      posicionLatitud=posicionLatitudP;
      
