@@ -11,13 +11,21 @@ package co.edu.uniandes.csw.mueblesdelosalpes.dto;
  */
 public class Vcub {
     
+    public final static String OCUPADO = "OCUPADO";
+    public final static String DISPONIBLE = "DISPONIBLE";
+    public final static String NO_DISPONIBLE = "NO DISPONIBLE";
+    
     private int id;
     
-    private boolean ocupado;
+    
+    private String ocupado;
+    
+    private int estacion;
 
-    public Vcub(int id) {
+    public Vcub(int id,int pEstacion) {
         this.id = id;
-        ocupado=false;
+        ocupado=Vcub.DISPONIBLE;
+        estacion = pEstacion;
     }
 
     
@@ -26,17 +34,37 @@ public class Vcub {
         return id;
     }
 
-    public boolean isOcupado() {
-        return ocupado;
+    public String isOcupado() {
+        if(ocupado.equalsIgnoreCase(Vcub.DISPONIBLE))
+        {
+            return Vcub.DISPONIBLE;
+        }
+        else if(ocupado.equalsIgnoreCase(Vcub.NO_DISPONIBLE))
+        {
+            return Vcub.NO_DISPONIBLE;
+        }
+        else
+        {
+            return Vcub.OCUPADO;
+        }
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setOcupado(boolean ocupado) {
+    public void setOcupado(String ocupado) {
         this.ocupado = ocupado;
     }
 
+    public int getEstacion() {
+        return estacion;
+    }
+
+    public void setEstacion(int estacion) {
+        this.estacion = estacion;
+    }
+
+    
     
 }

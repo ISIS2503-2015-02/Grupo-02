@@ -13,6 +13,7 @@
 package co.edu.uniandes.csw.mueblesdelosalpes.persistencia.mock;
 
 
+import co.edu.uniandes.csw.mueblesdelosalpes.dto.EstacionVcub;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.ExperienciaVendedor;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Mueble;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.RegistroVenta;
@@ -79,8 +80,11 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
      */
     private static ArrayList<Mobibus> mobibuses;
     
-    
-    
+    /**
+     * Lista de Estacion Vcub
+     */
+    private static ArrayList<EstacionVcub> estacionesVcub;
+    public final static int NUMERO_ESTACIONES= 20;
 
     //-----------------------------------------------------------
     // Constructor
@@ -115,13 +119,42 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             }
         }
         
+        if(estacionesVcub==null)
+        {
+            estacionesVcub = new ArrayList<EstacionVcub>();
+           
+            for(int i = 0 ; i<NUMERO_ESTACIONES;i++)
+            {
+                double longitud = 0 ;
+                double latitud = 0;
+                
+               EstacionVcub nueva = new EstacionVcub(i,longitud,latitud);
+               estacionesVcub.add(nueva);
+            }
+        }
+        
         if(vcubes==null)
         {
             vcubes = new ArrayList<Vcub>();
+            int indiceEstacion = 0 ;
+            int numeroMax = (int)(1+Math.random())*200;
             for(int b=0;b<4000;b++)
             {
-                Vcub nuevo = new Vcub(b);
+                EstacionVcub est = estacionesVcub.get(indiceEstacion);
+                if(numeroMax==est.getVcubsEstacion().size())
+                {
+                    indiceEstacion++;
+                    numeroMax = (int)(1+Math.random())*200;
+                }
+                if(indiceEstacion>=estacionesVcub.size())
+                {
+                    indiceEstacion = 0;
+                    numeroMax = 700;
+                }
+                EstacionVcub actual = estacionesVcub.get(indiceEstacion);
+                Vcub nuevo = new Vcub(b,actual.getId());
                 vcubes.add(nuevo);
+                actual.getVcubsEstacion().add(nuevo);
             }
         }
         
@@ -289,8 +322,14 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         {
             Vcub v = (Vcub) obj;
             v.setId(vcubes.size()+1);
-            v.setOcupado(false);
+            v.setOcupado(Vcub.DISPONIBLE);
             vcubes.add(v);
+        }
+        else if(obj instanceof EstacionVcub)
+        {
+           EstacionVcub v = (EstacionVcub) obj;
+            v.setId(estacionesVcub.size()+1);
+            estacionesVcub.add(v);
         }
         
         else if(obj instanceof Mobibus)
@@ -365,6 +404,21 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 if (vc.getId() == editar.getId())
                 {
                     vcubes.set(i, editar);
+                    break;
+                }
+            }
+        }
+          
+          else if(obj instanceof EstacionVcub)
+        {
+            EstacionVcub editar= (EstacionVcub) obj;
+            EstacionVcub evc;
+            for(int i = 0 ; i<estacionesVcub.size();i++)
+            {
+                evc = estacionesVcub.get(i);
+                if(evc.getId()==editar.getId())
+                {
+                    estacionesVcub.set(i, editar);
                     break;
                 }
             }
@@ -463,6 +517,21 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 }
             }
         }
+           else if (obj instanceof EstacionVcub)
+        {
+            EstacionVcub eliminar = (EstacionVcub) obj;
+            EstacionVcub vc;
+            for (int i = 0; i < estacionesVcub.size(); i++)
+            {
+                vc = estacionesVcub.get(i);
+                if (vc.getId() == eliminar.getId())
+                {
+                    vcubes.remove(i);
+                    break;
+                }
+            }
+        }
+           
         
         else if (obj instanceof Mobibus)
         {
@@ -521,7 +590,10 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         {
             return vcubes;
         }
-       
+        else if(c.equals(EstacionVcub.class))
+        {
+            return estacionesVcub;
+        }
         else
         {
             return null;
@@ -580,6 +652,17 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 }
             }
         }
+         else if(c.equals(EstacionVcub.class)){
+            for(Object v:findAll(c))
+            {
+                EstacionVcub vc = (EstacionVcub)v;
+                if(vc.getId()==Integer.parseInt(id.toString()))
+                {
+                    return vc;
+                }
+            }
+        }
+        
         
          else if(c.equals(Tranvia.class)){
             for(Object v:findAll(c))
