@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.mueblesdelosalpes.logica.ejb;
 
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Mobibus;
+import co.edu.uniandes.csw.mueblesdelosalpes.dto.Ruta;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Vcub;
 import co.edu.uniandes.csw.mueblesdelosalpes.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioMobibusLocal;
@@ -93,6 +94,46 @@ public class ServicioMobibus implements IServicioMobibusLocal{
         else
         {
             throw new OperacionInvalidaException("El Mobibus con id "+id+ " se encuentra desocupado.");
+        }
+    }
+
+    
+    @Override
+    public void agregarRuta(int  pId, int pDist, int pTiempo ) {
+   Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, pId);
+   int g=mb.getRutas().size();
+   Ruta ruta = new Ruta(pDist, pTiempo,g+1);
+        mb.agregarRuta(ruta);
+    }
+    
+
+    @Override
+    public String darReporteRutas(int pId) {
+        Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, pId);
+        String x="";
+        ArrayList<Ruta> rutas= mb.getRutas();
+       for (int i = 0; i < rutas.size(); i++) {
+            Ruta a=rutas.get(i);
+           
+            x+= "La ruta " + a.getID()+" tuvo una distancia de "+a.getDistancia()+ 
+                    " y un tiempo de " + a.getTiempo()+"<p>";
+            
+        }
+        return x;
+    }
+
+    @Override
+    public void eliminarRuta(int idMobibus, int idRuta) {
+       Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, idMobibus);
+   ArrayList<Ruta> rutas= mb.getRutas();
+   
+       for (int i = 0; i < rutas.size(); i++) {
+            Ruta a=rutas.get(i);
+           
+            if (a.getID()==idRuta) {
+               mb.eliminarRuta(a);
+           } 
+            
         }
     }
    

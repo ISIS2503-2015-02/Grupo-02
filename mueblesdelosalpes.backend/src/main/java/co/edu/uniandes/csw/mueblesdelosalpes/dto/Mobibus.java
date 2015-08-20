@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.mueblesdelosalpes.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -26,7 +27,8 @@ public class Mobibus {
     private boolean reservado;
     
     private String fechaReservacion;
-
+    
+     private static ArrayList<Ruta> rutas;
 
     public Mobibus(String nombreP1,double posicionLatitudP, double posicionLongitudP,double pKilometraje, String pFecha,int pID)
     {
@@ -41,12 +43,25 @@ public class Mobibus {
      reservado=false;
      
      fechaReservacion=pFecha;
+     
      id=pID;
-        
+     
+     rutas= new ArrayList<Ruta>();
     }
 
-   
+   public void agregarRuta(Ruta pRuta)
+   {
+       rutas.add(pRuta);
+   }
+   public void eliminarRuta(Ruta pRuta)
+   {
+       rutas.remove(pRuta);
+   }
     
+   public ArrayList<Ruta> getRutas()
+   {
+       return rutas;
+   }
     public String getNombre()
     {
         return nombre;

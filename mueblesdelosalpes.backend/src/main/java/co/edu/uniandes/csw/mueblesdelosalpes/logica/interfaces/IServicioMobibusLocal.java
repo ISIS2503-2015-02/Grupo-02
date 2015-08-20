@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces;
 
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Mobibus;
+import co.edu.uniandes.csw.mueblesdelosalpes.dto.Ruta;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Tranvia;
 import co.edu.uniandes.csw.mueblesdelosalpes.excepciones.OperacionInvalidaException;
 import java.util.List;
@@ -27,5 +28,11 @@ public interface IServicioMobibusLocal {
       public void alquilarMobibus(int id)  throws OperacionInvalidaException;
       
       public void liberarMobibus(int id) throws OperacionInvalidaException;
+      
+      public void agregarRuta(int idMobibus, int pDist, int Ptiempo);
+      
+      public void eliminarRuta(int idMobibus, int idRuta);
+      
+      public String darReporteRutas(int id);
      
 }
