@@ -61,7 +61,7 @@ public class MobibusService {
     }
     
     @PUT
-    @Path("mobibuses/{id}/alquilar")
+    @Path("mobibuses/alquilar/{id}")
     public void alquilarMobibus(@PathParam("id") int id)
     {
         try {
@@ -71,7 +71,7 @@ public class MobibusService {
         }
     }
      @PUT
-    @Path("mobibuses/{id}/liberar")
+    @Path("mobibuses/liberar/{id}")
     public void liberarMobibus(@PathParam("id") int id)
     {
         try {
@@ -82,21 +82,21 @@ public class MobibusService {
     }
     
     @POST 
-    @Path("mobibuses/{id}/{distancia}/{tiempo}/agregarRuta")
+    @Path("mobibuses/agregarRuta/{id}/{distancia}/{tiempo}")
     public void agregarRuta(@PathParam("id") int id,@PathParam("distancia") int pDist,@PathParam("tiempo") int pTiempo)
     {
         mobibusEjb.agregarRuta(id, pDist, pTiempo); 
     }
     
     @PUT 
-    @Path("mobibuses/{id}/{id2}/eliminarRuta")
+    @Path("mobibuses/eliminarRuta/{id}/{id2}")
     public void eliminarRuta(@PathParam("id") int idMobibus,@PathParam("id2") int idRuta)
     {
         mobibusEjb.eliminarRuta(idMobibus, idRuta); 
     }
     
     @GET
-    @Path("mobibuses/{id}/reporteRutas")
+    @Path("mobibuses/reporteRutas/{id}")
     public String generarReporteRutas(@PathParam("id") int id)
     {
         
