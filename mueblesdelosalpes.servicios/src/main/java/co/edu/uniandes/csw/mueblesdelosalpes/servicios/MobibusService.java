@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.mueblesdelosalpes.servicios;
 
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Mobibus;
+import co.edu.uniandes.csw.mueblesdelosalpes.dto.Ruta;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Tranvia;
 import co.edu.uniandes.csw.mueblesdelosalpes.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioMobibusLocal;
@@ -17,6 +18,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -60,7 +62,7 @@ public class MobibusService {
     
     @PUT
     @Path("mobibuses/{id}/alquilar")
-    public void alquilarVcub(@PathParam("id") int id)
+    public void alquilarMobibus(@PathParam("id") int id)
     {
         try {
             mobibusEjb.alquilarMobibus(id);
@@ -70,7 +72,7 @@ public class MobibusService {
     }
      @PUT
     @Path("mobibuses/{id}/liberar")
-    public void liberarVcub(@PathParam("id") int id)
+    public void liberarMobibus(@PathParam("id") int id)
     {
         try {
             mobibusEjb.liberarMobibus(id);
@@ -79,5 +81,27 @@ public class MobibusService {
         } 
     }
     
+    @POST 
+    @Path("mobibuses/{id}/{distancia}/{tiempo}/agregarRuta")
+    public void agregarRuta(@PathParam("id") int id,@PathParam("distancia") int pDist,@PathParam("tiempo") int pTiempo)
+    {
+        mobibusEjb.agregarRuta(id, pDist, pTiempo); 
+    }
+    
+    @PUT 
+    @Path("mobibuses/{id}/{id2}/eliminarRuta")
+    public void eliminarRuta(@PathParam("id") int idMobibus,@PathParam("id2") int idRuta)
+    {
+        mobibusEjb.eliminarRuta(idMobibus, idRuta); 
+    }
+    
+    @GET
+    @Path("mobibuses/{id}/reporteRutas")
+    public String generarReporteRutas(@PathParam("id") int id)
+    {
+        
+        return mobibusEjb.darReporteRutas(id);
+        
+    }
     
 }
