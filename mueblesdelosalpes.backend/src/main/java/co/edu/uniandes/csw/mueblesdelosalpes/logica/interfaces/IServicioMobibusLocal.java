@@ -34,5 +34,9 @@ public interface IServicioMobibusLocal {
       public void eliminarRuta(int idMobibus, int idRuta);
       
       public String darReporteRutas(int id);
+      
+      public Mobibus cambiarPosicion(int id,double longi , double lat);
+      
+      public Mobibus cambiarKilo(int id,double kilo);
      
 }

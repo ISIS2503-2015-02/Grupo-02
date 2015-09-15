@@ -104,4 +104,15 @@ public class MobibusService {
         
     }
     
+      @PUT
+    @Path("mobibus/{id}/{longitud}_{latitud}")
+      public Mobibus modificarPos(@PathParam("id") int idest,@PathParam("longitud")double longi,@PathParam("latitud") double lati){
+          return mobibusEjb.cambiarPosicion(idest, longi, lati);
+      }
+      
+        @PUT
+    @Path("mobibus/{id}/{kilo}")
+      public Mobibus modificarPos(@PathParam("id") int idest,@PathParam("kilo")double kilo){
+          return mobibusEjb.cambiarKilo(idest, kilo);
+      }
 }

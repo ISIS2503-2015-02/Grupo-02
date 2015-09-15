@@ -21,11 +21,17 @@ public class Vcub {
     private String ocupado;
     
     private int estacion;
+    
+    private double longitud;
+    
+    private double latitud;
 
     public Vcub(int id,int pEstacion) {
         this.id = id;
         ocupado=Vcub.DISPONIBLE;
         estacion = pEstacion;
+        longitud = 0;
+        latitud =0;
     }
 
     
@@ -63,6 +69,22 @@ public class Vcub {
 
     public void setEstacion(int estacion) {
         this.estacion = estacion;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
     }
 
     

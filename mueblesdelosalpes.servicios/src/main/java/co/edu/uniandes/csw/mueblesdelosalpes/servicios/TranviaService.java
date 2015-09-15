@@ -39,9 +39,7 @@ public class TranviaService {
      @GET
     @Path("tranvias/")
      
-    public List<Tranvia> getTodosLosUsuarios() {
-        
-      
+    public List<Tranvia> getTodosLosUsuarios() {      
        return tranviaEjb.darTranvias();
  
     }

@@ -111,4 +111,10 @@ public class EstacionVcubService
         return estacionesEjb.darVcubesNoDisponiblesEstacion(idest);
     }
     
+     @PUT
+    @Path("vcub/{id}/{longitud}_{latitud}")
+    public Vcub cambiarPosVcub(@PathParam("id") int idest,@PathParam("longitud")double longi,@PathParam("latitud") double lati)
+    {
+        return estacionesEjb.modificarPosVcub(idest, longi, lati);
+    }
 }

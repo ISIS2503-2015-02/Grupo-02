@@ -136,6 +136,21 @@ public class ServicioMobibus implements IServicioMobibusLocal{
             
         }
     }
+
+    @Override
+    public Mobibus cambiarPosicion(int id, double longi, double lat) {
+    Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
+    mb.setPosicionLatitud(lat);
+    mb.setPosicionLongitud(longi);
+    return mb;
+    }
+
+    @Override
+    public Mobibus cambiarKilo(int id, double kilo) {
+      Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
+    mb.setKilometraje(kilo);
+    return mb;
+    }
    
    
 }

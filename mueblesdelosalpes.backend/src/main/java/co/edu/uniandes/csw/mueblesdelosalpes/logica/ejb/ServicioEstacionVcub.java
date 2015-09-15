@@ -211,6 +211,27 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal{
         return sol;
     }
 
+    @Override
+    public Vcub modificarPosVcub(int idVcub, double longitud, double latitud) 
+    {
+        Vcub vc = (Vcub) persistencia.findById(Vcub.class, idVcub);
+        EstacionVcub evc = (EstacionVcub) persistencia.findById(EstacionVcub.class, vc.getEstacion());
+        ArrayList<Vcub> arr = evc.getVcubsEstacion();
+        Vcub r = null;
+        for (Vcub arr1 : arr)
+        {
+            if(arr1.getId()==idVcub)
+            {
+                arr1.setLatitud(latitud);
+                arr1.setLongitud(longitud);
+                persistencia.update(arr1);
+                r=arr1;
+                break;
+            }
+        }
+        return r;
+    }
+
 
     
 }
