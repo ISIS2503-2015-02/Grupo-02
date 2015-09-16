@@ -318,7 +318,8 @@ function setMarkers(map,data) {
   // The final coordinate closes the poly by connecting to the first coordinate.
   
   
-   document.getElementById('directionsPanel').innerHTML=" ";
+   document.getElementById('directionsPanel').innerHTML=" <h2><strong> <font color=\"white\">Tranvias en estado de emergencia </font>  </strong> </h2>";
+    
   
    $.each(data, function(index,value){
           var latitud= value.posicionLatitud;
@@ -334,9 +335,10 @@ function setMarkers(map,data) {
           {
                imagen="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=caution|#00FFBF";
                contenido="el vehiculo "+value.nombre+" se encuentra en estado de emergencia"+"<p>"+"<button name=\"busquedaMasCercano\" id=\"busquedaMasCercano\" onclick=\"busquedaMasCercano("+latitud+","+longitud+"); return false;\"> Buscar bus mas cercano </button>";
-             document.getElementById('directionsPanel').innerHTML+=value.nombre+" ";
-             document.getElementById('directionsPanel').innerHTML+="<button name=\"acercarEmergencia\" id=\"acercarEmergencia\" onclick=\"acercarEmergencia("+latitud+","+longitud+"); return false;\"> Buscar En el mapa </button> <p>";
-          }
+           document.getElementById('directionsPanel').innerHTML+="<input type=image src=\"images/lupa.png\" name=\"acercarEmergencia\" id=\"acercarEmergencia\" onclick=\"acercarEmergencia("+latitud+","+longitud+"); return false;\">  ";
+          
+           document.getElementById('directionsPanel').innerHTML+="<font color=\"white\" >" +  value.nombre  + "   </font> <p>" ;
+               }
           else
           {
              contenido="Nombre Tranvia: "+value.nombre+"<p>";
@@ -393,8 +395,11 @@ function generarReporte()
                     
                           
                           var latitud=data;
-                          
-                          document.getElementById("reporte").innerHTML=latitud;
+                          var rta="<font color=\"white\"> <h2> Reporte </h2> </font> ";
+                          rta+=data;
+                  
+                           document.getElementById("reporte").innerHTML=rta;
+                         
                      
                           
                           
