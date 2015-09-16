@@ -326,7 +326,7 @@ function setMarkers(map,data) {
               var longitud=value.posicionLongitud;
               var nivelChoque=value.nivelChoque;
               var nivelPanico=value.nivelPanico;
-              var nivelTemperatura=value.nivelTemperatura;
+              var nivelTemperatura=value.nivelTemparatura;
                var imagen="" ;
               var contenido="";
                 
