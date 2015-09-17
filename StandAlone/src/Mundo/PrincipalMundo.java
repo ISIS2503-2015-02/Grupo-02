@@ -472,7 +472,7 @@ public class PrincipalMundo
 			        Vcub nuevo = new Vcub(id,estacion);
 			        nuevo.setLatitud(lat);
 			        nuevo.setLongitud(lon);
-			        vcubesOcupados.add(nuevo);
+			        vcubesNoDisponibles.add(nuevo);
 			}
 			   
 			}
