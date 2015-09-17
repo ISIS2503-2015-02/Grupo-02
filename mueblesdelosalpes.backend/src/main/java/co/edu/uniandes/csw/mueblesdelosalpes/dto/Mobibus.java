@@ -16,7 +16,7 @@ public class Mobibus {
     
     private String nombre ;
     
-    private int id;
+    private long id;
     
     private double posicionLatitud ;
     
@@ -82,7 +82,7 @@ public class Mobibus {
         return kilometraje;
     }
     
-     public int getID()
+     public long getID()
     {
         return id;
     }

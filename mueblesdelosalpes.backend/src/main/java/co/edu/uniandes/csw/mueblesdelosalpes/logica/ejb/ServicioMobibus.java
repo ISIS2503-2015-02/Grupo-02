@@ -35,7 +35,7 @@ public class ServicioMobibus implements IServicioMobibusLocal{
     @Override
     public List<Mobibus> darMobibuses() {
       //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        System.out.println("pide los mobibuses");
+        System.out.println("pide los mobibuses Cristiannn");
      return persistencia.findAll(Mobibus.class);
     }
     
