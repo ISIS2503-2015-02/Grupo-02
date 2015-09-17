@@ -86,7 +86,5 @@ public class Vcub {
     public void setLatitud(double latitud) {
         this.latitud = latitud;
     }
-
-    
-    
+ 
 }

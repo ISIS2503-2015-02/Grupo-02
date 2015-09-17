@@ -87,6 +87,13 @@ public class EstacionVcubService
     }
     
     @PUT
+    @Path("estacion/{id}/aumentar")
+    public void aumentarCapacidadEstacionEspecifica(@PathParam("id") int idest)
+    {
+        estacionesEjb.aumentarVcubesEspecifica(idest);
+    }
+    
+    @PUT
     @Path("estacion/reducir")
     public void reducirCapacidadEstaciones()
     {

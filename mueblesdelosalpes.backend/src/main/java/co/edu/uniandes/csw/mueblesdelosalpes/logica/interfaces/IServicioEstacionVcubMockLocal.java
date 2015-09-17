@@ -39,4 +39,6 @@ public interface IServicioEstacionVcubMockLocal
     public List<Vcub> darVcubesNoDisponiblesEstacion(int IDestacion);
     
     public Vcub modificarPosVcub(int idVcub, double longitud, double latitud);
+
+    public void aumentarVcubesEspecifica(int idest);
 }

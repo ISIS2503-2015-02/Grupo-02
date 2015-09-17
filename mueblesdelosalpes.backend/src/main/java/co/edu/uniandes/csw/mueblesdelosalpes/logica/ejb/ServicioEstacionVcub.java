@@ -232,6 +232,26 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal{
         return r;
     }
 
+    @Override
+    public void aumentarVcubesEspecifica(int idest)
+    {
+    EstacionVcub est = (EstacionVcub) persistencia.findById(EstacionVcub.class, idest);
+                    int numero30 = (int) (est.getVcubsEstacion().size()*(0.3));
+                    int j = 0 ;
+                    int index = 0 ;
+                    ArrayList<Vcub> vcubes = est.getVcubsEstacion();
+                    while(j<=numero30 && index<vcubes.size())
+                    {
+                        Vcub actual = vcubes.get(index);
+                        if(actual.isOcupado().equals(Vcub.NO_DISPONIBLE))
+                        {
+                            j++;
+                            actual.setOcupado(Vcub.DISPONIBLE);
+                        }
+                        index++;
+                    }
+    }
+
 
     
 }
