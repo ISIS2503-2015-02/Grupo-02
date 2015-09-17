@@ -24,7 +24,8 @@ import javax.persistence.OneToMany;
 public class MobiBusEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     
     private String nombre ;
     
@@ -90,11 +91,11 @@ public class MobiBusEntity implements Serializable {
     }
     
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

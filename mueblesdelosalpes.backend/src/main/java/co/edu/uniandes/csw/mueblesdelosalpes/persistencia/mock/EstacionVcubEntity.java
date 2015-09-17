@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 public class EstacionVcubEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
     private double longitudEstacion;

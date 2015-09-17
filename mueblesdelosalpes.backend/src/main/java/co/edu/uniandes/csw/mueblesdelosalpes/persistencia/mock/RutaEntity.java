@@ -21,7 +21,8 @@ import javax.persistence.ManyToOne;
 public class RutaEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     
     private int distancia;
     
@@ -54,7 +55,7 @@ public class RutaEntity implements Serializable {
         this.tiempo = tiempò;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

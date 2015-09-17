@@ -23,6 +23,7 @@ import co.edu.uniandes.csw.mueblesdelosalpes.dto.Tranvia;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Usuario;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Vcub;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Mobibus;
+import co.edu.uniandes.csw.mueblesdelosalpes.dto.Ruta;
 import co.edu.uniandes.csw.mueblesdelosalpes.dto.Vendedor;
 import co.edu.uniandes.csw.mueblesdelosalpes.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mueblesdelosalpes.logica.interfaces.IServicioPersistenciaMockLocal;
@@ -130,30 +131,34 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
 //            }
 //        }
 //        
-//        if(vcubes==null)
-//        {
-//            vcubes = new ArrayList<Vcub>();
-//            int indiceEstacion = 0 ;
-//            int numeroMax = (int)(1+Math.random())*200;
-//            for(int b=0;b<4000;b++)
-//            {
-//                EstacionVcub est = estacionesVcub.get(indiceEstacion);
-//                if(numeroMax==est.getVcubsEstacion().size())
-//                {
-//                    indiceEstacion++;
-//                    numeroMax = (int)(1+Math.random())*200;
-//                }
-//                if(indiceEstacion>=estacionesVcub.size())
-//                {
-//                    indiceEstacion = 0;
-//                    numeroMax = 700;
-//                }
-//                EstacionVcub actual = estacionesVcub.get(indiceEstacion);
-//                Vcub nuevo = new Vcub(b,actual.getId());
-//                vcubes.add(nuevo);
-//                actual.getVcubsEstacion().add(nuevo);
-//            }
-//        }
+        if(vcubes==null)
+        {
+            vcubes = new ArrayList<Vcub>();
+            int indiceEstacion = 0 ;
+            int numeroMax = (int)(1+Math.random())*200;
+            for(int b=0;b<4000;b++)
+            {
+                EstacionVcub est = estacionesVcub.get(indiceEstacion);
+                if(numeroMax==est.getVcubsEstacion().size())
+                {
+                    indiceEstacion++;
+                    numeroMax = (int)(1+Math.random())*200;
+                }
+                if(indiceEstacion>=estacionesVcub.size())
+                {
+                    indiceEstacion = 0;
+                    numeroMax = 700;
+                }
+                EstacionVcub actual = estacionesVcub.get(indiceEstacion);
+                Vcub nuevo = new Vcub(b,actual.getId());
+                vcubes.add(nuevo);
+                actual.getVcubsEstacion().add(nuevo);
+                VcubEntity vc= new VcubEntity();
+                vc.setEstacion(indiceEstacion);
+                               
+            }
+            
+        }
 //        
 //        if(tranvias== null)
 //        {
@@ -239,8 +244,28 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             v.setId(estacionesVcub.size()+1);
             estacionesVcub.add(v);
         }
-        
+        else if(obj instanceof Vcub)
+        {
+            Mobibus mb = (Mobibus) obj;
+            mb.setID(mobibuses.size()+1);
+            mb.setReservado(false);
+            mobibuses.add(mb);
+        }
         else if(obj instanceof Mobibus)
+        {
+            Mobibus mb = (Mobibus) obj;
+            mb.setID(mobibuses.size()+1);
+            mb.setReservado(false);
+            mobibuses.add(mb);
+        }
+        else if(obj instanceof Tranvia)
+        {
+            Mobibus mb = (Mobibus) obj;
+            mb.setID(mobibuses.size()+1);
+            mb.setReservado(false);
+            mobibuses.add(mb);
+        }
+        else if(obj instanceof Ruta)
         {
             Mobibus mb = (Mobibus) obj;
             mb.setID(mobibuses.size()+1);
@@ -257,52 +282,8 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     @Override
     public void update(Object obj)
     {
-        if (obj instanceof Vendedor)
-        {
-            Vendedor editar = (Vendedor) obj;
-            Vendedor vendedor;
-            for (int i = 0; i < vendedores.size(); i++)
-            {
-                vendedor = vendedores.get(i);
-                if (vendedor.getIdentificacion() == editar.getIdentificacion())
-                {
-                    vendedores.set(i, editar);
-                    break;
-                }
-
-            }
-
-        }
-        else if (obj instanceof Mueble)
-        {
-            Mueble editar = (Mueble) obj;
-            Mueble mueble;
-            for (int i = 0; i < muebles.size(); i++)
-            {
-                mueble = muebles.get(i);
-                if (mueble.getReferencia() == editar.getReferencia())
-                {
-                    muebles.set(i, editar);
-                    break;
-                }
-            }
-        } 
-        else if (obj instanceof Usuario)
-        {
-
-            Usuario editar = (Usuario) obj;
-            Usuario usuario;
-            for (int i = 0; i < usuarios.size(); i++)
-            {
-                usuario = usuarios.get(i);
-                if (usuario.getLogin().equals(editar.getLogin()))
-                {
-                    usuarios.set(i, editar);
-                    break;
-                }
-            }
-        }
-          else if (obj instanceof Vcub)
+       
+        if (obj instanceof Vcub)
         {
             Vcub editar = (Vcub) obj;
             Vcub vc;
@@ -346,6 +327,34 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 }
             }
         }
+        else if (obj instanceof Tranvia)
+        {
+            Mobibus editar = (Mobibus) obj;
+            Mobibus mb;
+            for (int i = 0; i < mobibuses.size(); i++)
+            {
+                mb = mobibuses.get(i);
+                if (mb.getID() == editar.getID())
+                {
+                    mobibuses.set(i, editar);
+                    break;
+                }
+            }
+        }
+        else if (obj instanceof Ruta)
+        {
+            Mobibus editar = (Mobibus) obj;
+            Mobibus mb;
+            for (int i = 0; i < mobibuses.size(); i++)
+            {
+                mb = mobibuses.get(i);
+                if (mb.getID() == editar.getID())
+                {
+                    mobibuses.set(i, editar);
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -355,7 +364,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     @Override
     public void delete(Object obj) throws OperacionInvalidaException
     {
-        if (obj instanceof Vendedor)
+        if (obj instanceof Ruta)
         {
             Vendedor vendedorABorrar = (Vendedor) obj;
 
@@ -370,7 +379,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             }
 
         } 
-        else if (obj instanceof Mueble)
+        else if (obj instanceof Mobibus)
         {
             Mueble mueble;
             Mueble eliminar = (Mueble) obj;
@@ -386,7 +395,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             }
 
         } 
-        else if (obj instanceof Usuario)
+        else if (obj instanceof Tranvia)
         {
             Usuario usuarioABorrar = (Usuario) obj;
             for (RegistroVenta rv : registrosVentas)
@@ -439,22 +448,6 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 }
             }
         }
-           
-        
-        else if (obj instanceof Mobibus)
-        {
-            Mobibus eliminar = (Mobibus) obj;
-            Mobibus mb;
-            for (int i = 0; i < mobibuses.size(); i++)
-            {
-                mb = mobibuses.get(i);
-                if (mb.getID() == eliminar.getID())
-                {
-                    mobibuses.remove(i);
-                    break;
-                }
-            }
-        }
     }
 
     /**
@@ -465,86 +458,85 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     @Override
     public List findAll(Class c)
     {
-        System.out.println("Este es el entity "+entityManager);
-        if (c.equals(Tranvia.class))
+         if (c.equals(Tranvia.class))
         {
-             if(tranvias== null)
-        {             
-            tranvias=new ArrayList<Tranvia>() ;
-            
-            for(int i = 0 ; i<250 ; i++)
-            {
-                int linea=(int)(Math.random()*3);
-                
-                String ruta="";
-                
-                if(linea==1)
-                {
-                    ruta="A";
-                }
-                if(linea==2)
-                {
-                    ruta="B";
-                }
-                if(linea==3 || linea==0){
-                    ruta="C";
-                }
-                double numero=0;
-                double numero2=0;
-                double tiempoTrayecto=0;
-                
-                if(linea==1)
-                {
-                      numero=(Math.random()*0.41)+4.43;
-                 numero2=0-74.068;
-                 tiempoTrayecto=(Math.random()*2)+2;
-                    
-                }
-                if(linea==2)
-                {
-                      numero=4.63;
-                 numero2=(Math.random()*(-0.213))-74.001;
-                  tiempoTrayecto=(Math.random()*1.5)+1.5;
-                }
-                if(linea==3 || linea==0){
-                      numero=4.69;
-                 numero2=(Math.random()*(-0.213))-74.001;
-                  tiempoTrayecto=(Math.random()*1.5)+2;
-                }
-                
-                
-                double kilometraje ;
-                
-                
-                kilometraje=Math.random()*10000+1000 ;
-                
-              String  nombreConductor="conductor"+i;
-               
-                Tranvia x = new Tranvia("tranvia"+(i), ruta, numero, numero2, 3, 3, 3, kilometraje,nombreConductor,tiempoTrayecto) ;
-                TranviaEntity t = new TranviaEntity();
-                t.setKilometraje(kilometraje);
-                t.setLinea(ruta);
-                t.setNivelChoque(x.getNivelChoque());
-                t.setNivelPanico(x.getNivelPanico());
-                t.setNivelTemperatura(x.getNivelTemparatura());
-                t.setNombre(x.getNombre());
-                t.setNombreConductor(x.getNombreConductor());
-                t.setPosicionLatitud(x.getposicionLatitud());
-                t.setPosicionLongitud(x.getposicionLongitud());
-                t.setTiempoTrayecto(tiempoTrayecto);
-                
-                try {
-                    entityManager.persist(t);
-                    System.out.println("Persiste tranvia");
-                } catch (Exception e) {
-                    System.out.println("NO Persiste tranvia: "+e.getMessage());
-                }
-                
-                
-                tranvias.add(x);
-                
-            }
-            }
+//             if(tranvias== null)
+//        {             
+//            tranvias=new ArrayList<Tranvia>() ;
+//            
+//            for(int i = 0 ; i<250 ; i++)
+//            {
+//                int linea=(int)(Math.random()*3);
+//                
+//                String ruta="";
+//                
+//                if(linea==1)
+//                {
+//                    ruta="A";
+//                }
+//                if(linea==2)
+//                {
+//                    ruta="B";
+//                }
+//                if(linea==3 || linea==0){
+//                    ruta="C";
+//                }
+//                double numero=0;
+//                double numero2=0;
+//                double tiempoTrayecto=0;
+//                
+//                if(linea==1)
+//                {
+//                      numero=(Math.random()*0.41)+4.43;
+//                 numero2=0-74.068;
+//                 tiempoTrayecto=(Math.random()*2)+2;
+//                    
+//                }
+//                if(linea==2)
+//                {
+//                      numero=4.63;
+//                 numero2=(Math.random()*(-0.213))-74.001;
+//                  tiempoTrayecto=(Math.random()*1.5)+1.5;
+//                }
+//                if(linea==3 || linea==0){
+//                      numero=4.69;
+//                 numero2=(Math.random()*(-0.213))-74.001;
+//                  tiempoTrayecto=(Math.random()*1.5)+2;
+//                }
+//                
+//                
+//                double kilometraje ;
+//                
+//                
+//                kilometraje=Math.random()*10000+1000 ;
+//                
+//              String  nombreConductor="conductor"+i;
+//               
+//                Tranvia x = new Tranvia("tranvia"+(i), ruta, numero, numero2, 3, 3, 3, kilometraje,nombreConductor,tiempoTrayecto) ;
+//                TranviaEntity t = new TranviaEntity();
+//                t.setKilometraje(kilometraje);
+//                t.setLinea(ruta);
+//                t.setNivelChoque(x.getNivelChoque());
+//                t.setNivelPanico(x.getNivelPanico());
+//                t.setNivelTemperatura(x.getNivelTemparatura());
+//                t.setNombre(x.getNombre());
+//                t.setNombreConductor(x.getNombreConductor());
+//                t.setPosicionLatitud(x.getposicionLatitud());
+//                t.setPosicionLongitud(x.getposicionLongitud());
+//                t.setTiempoTrayecto(tiempoTrayecto);
+//                
+//                try {
+//                    entityManager.persist(t);
+//                    System.out.println("Persiste tranvia");
+//                } catch (Exception e) {
+//                    System.out.println("NO Persiste tranvia: "+e.getMessage());
+//                }
+//
+//
+// tranvias.add(x);
+//   
+// }
+// }
             
             
             return tranvias;
@@ -552,44 +544,44 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         } 
          if (c.equals(Mobibus.class))
         {
-            mobibuses=new ArrayList<Mobibus>() ;
-            
-            for(int i = 0 ; i<250 ; i++)            {
-                
-               double numero = (Math.random()*0.41)+4.43;
-                
-                double numero2=(Math.random()*(-0.213))-74.001;
-                
-            
-                Mobibus m= new Mobibus("Mobibus"+i, numero, numero2, 56+i, "ss",i);
-                
-                MobiBusEntity mo= new MobiBusEntity();
-                mo.setFechaReservacion(m.getFechaReservacion());
-                mo.setId(mo.getId());
-                mo.setNombre(m.getNombre());
-                mo.setPosicionLatitud(m.getposicionLatitud());
-                mo.setPosicionLongitud(m.getposicionLongitud());
-                mo.setReservado(m.getReservado());
-           
-                
-                      try {
-            entityManager.persist(mo);
-            System.out.println("Se persistio correctamente");
-           
-        } catch (Exception t) {
-            System.out.println("Se toteo "+t.getMessage());
-     
-            t.printStackTrace();
-            
-        }
-                  
-            
-           
-                
-                mobibuses.add(m);
-                
-            
-            }
+//            mobibuses=new ArrayList<Mobibus>() ;
+//            
+//            for(int i = 0 ; i<250 ; i++)            {
+//                
+//               double numero = (Math.random()*0.41)+4.43;
+//                
+//                double numero2=(Math.random()*(-0.213))-74.001;
+//                
+//            
+//                Mobibus m= new Mobibus("Mobibus"+i, numero, numero2, 56+i, "ss",i);
+//                
+//                MobiBusEntity mo= new MobiBusEntity();
+//                mo.setFechaReservacion(m.getFechaReservacion());
+//                mo.setId(mo.getId());
+//                mo.setNombre(m.getNombre());
+//                mo.setPosicionLatitud(m.getposicionLatitud());
+//                mo.setPosicionLongitud(m.getposicionLongitud());
+//                mo.setReservado(m.getReservado());
+//           
+//                
+//                      try {
+//            entityManager.persist(mo);
+//            System.out.println("Se persistio correctamente");
+//           
+//        } catch (Exception t) {
+//            System.out.println("Se toteo "+t.getMessage());
+//     
+//            t.printStackTrace();
+//            
+//        }
+//                  
+//            
+//           
+//                
+//                mobibuses.add(m);
+//                
+//            
+//            }
             
             
             return mobibuses;
@@ -601,6 +593,10 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             return vcubes;
         }
         else if(c.equals(EstacionVcub.class))
+        {
+            return estacionesVcub;
+        }
+        else if(c.equals(Ruta.class))
         {
             return estacionesVcub;
         }
@@ -621,6 +617,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     {
         if (c.equals(Vendedor.class))
         {
+            entityManager.find(c, id);
             for (Object v : findAll(c))
             {
                 Vendedor ven = (Vendedor) v;
