@@ -11,7 +11,7 @@
          var mapa="";
                 
                 $.ajax({
-                    url: '../mueblesdelosalpes.servicios/webresources/Tranvia/tranvias',
+                    url: '../mobibuses.servicios/webresources/Tranvia/tranvias',
                     type : "GET",
                   
                     contentType: 'application/json',
@@ -107,7 +107,7 @@
     {
         
         $.ajax({
-                    url: '../mueblesdelosalpes.servicios/webresources/mobibus/mobibuses',
+                    url: '../mobibuses.servicios/webresources/mobibus/mobibuses',
                     type : "GET",
                   
                     contentType: 'application/json',
@@ -242,7 +242,7 @@ var shapes = {
       
       
        $.ajax({
-                    url: '../mueblesdelosalpes.servicios/webresources/mobibus/mobibuses/'+coordenada1+"/"+coordenada2,
+                    url: '../mobibuses.servicios/webresources/mobibus/mobibuses/'+coordenada1+"/"+coordenada2,
                     type : "GET",
                     
                     
@@ -277,7 +277,7 @@ var shapes = {
   {
      
                 $.ajax({
-                    url: '../mueblesdelosalpes.servicios/webresources/Tranvia/tranvias',
+                    url: '../mobibuses.servicios/webresources/Tranvia/tranvias',
                     type : "GET",
                   
                     contentType: 'application/json',
@@ -383,7 +383,7 @@ function generarReporte()
     
     
        $.ajax({
-                    url: '../mueblesdelosalpes.servicios/webresources/Tranvia/tranvias/generarReportes',
+                    url: '../mobibuses.servicios/webresources/Tranvia/tranvias/generarReportes',
                     type : "GET",
                     
                     
@@ -450,7 +450,7 @@ function cambiarEstadoTranvia()
     var numero=document.getElementById('valorTranvia').value;
     
      $.ajax({
-                    url: '../mueblesdelosalpes.servicios/webresources/Tranvia/tranvias/cambiar/'+identificador+"/"+emer+"/"+numero,
+                    url: '../mobibuses.servicios/webresources/Tranvia/tranvias/cambiar/'+identificador+"/"+emer+"/"+numero,
                     type : "PUT",
                   
                     contentType: 'application/json',
