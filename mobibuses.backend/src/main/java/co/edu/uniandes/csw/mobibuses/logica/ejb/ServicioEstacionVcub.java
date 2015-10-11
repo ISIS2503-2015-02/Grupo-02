@@ -6,17 +6,24 @@
 package co.edu.uniandes.csw.mobibuses.logica.ejb;
 
 import co.edu.uniandes.csw.mobibuses.dto.EstacionVcub;
+import co.edu.uniandes.csw.mobibuses.dto.Mobibus;
 import co.edu.uniandes.csw.mobibuses.dto.Vcub;
 import co.edu.uniandes.csw.mobibuses.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioEstacionVcubMockLocal;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioPersistenciaMockLocal;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.EstacionVcubEntity;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.MobiBusEntity;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.PersistenceManager;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.ServicioPersistenciaMock;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.TransformadorEntityDto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,16 +33,24 @@ import javax.ejb.Stateless;
 @Local
 public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Serializable{
 
-     private IServicioPersistenciaMockLocal persistencia;
+     @PersistenceContext
+    private EntityManager em;
 
     public ServicioEstacionVcub() {
-         this.persistencia = new ServicioPersistenciaMock();
+         if(darTodosVcub().size()==0)
+          TransformadorEntityDto.getInstance().crearVcubes(em);
     }
      
     @Override
     public List<EstacionVcub> darEstacionesVcub()
     {
-        return persistencia.findAll(EstacionVcub.class);
+            Query q = em.createQuery("SELECT u from EstacionVcubEntity u");
+            List<EstacionVcubEntity> estaciones = q.getResultList();
+            ArrayList<EstacionVcub> dtos = new ArrayList();
+            for (EstacionVcubEntity est : estaciones) {
+                dtos.add(TransformadorEntityDto.getInstance().EntityADtoEstacionVcube(est));
+            }
+            return dtos;
     }
 
     @Override

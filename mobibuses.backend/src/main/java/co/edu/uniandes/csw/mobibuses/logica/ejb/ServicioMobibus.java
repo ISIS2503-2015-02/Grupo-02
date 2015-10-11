@@ -10,6 +10,7 @@ import co.edu.uniandes.csw.mobibuses.dto.Ruta;
 import co.edu.uniandes.csw.mobibuses.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioMobibusLocal;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.MobiBusEntity;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.RutaEntity;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.TransformadorEntityDto;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
 
     public ServicioMobibus()
     {
-      
+      if(darMobibuses().size()==0)
+          TransformadorEntityDto.getInstance().crearMobibibuses(em);
   
     }
     
@@ -138,32 +140,27 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
 
     @Override
     public void eliminarRuta(int idMobibus, int idRuta) {
-//       Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, idMobibus);
-//   ArrayList<Ruta> rutas= mb.getRutas();
-//   
-//       for (int i = 0; i < rutas.size(); i++) {
-//            Ruta a=rutas.get(i);
-//           
-//            if (a.getID()==idRuta) {
-//               mb.eliminarRuta(a);
-//           } 
-//            
-//        }
+        MobiBusEntity mb = em.find(MobiBusEntity.class, idMobibus);
+        RutaEntity r = em.find(RutaEntity.class, idRuta);
+        em.remove(r);
+   
+       
     }
 
     @Override
     public Mobibus cambiarPosicion(int id, double longi, double lat) {
-//    Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
-//    mb.setPosicionLatitud(lat);
-//    mb.setPosicionLongitud(longi);
-    return null;
+        MobiBusEntity mb = em.find(MobiBusEntity.class, id);
+        mb.setPosicionLatitud(lat);
+        mb.setPosicionLongitud(longi);
+        return TransformadorEntityDto.getInstance().EntityADtoMobibus(mb);
     }
 
     @Override
     public Mobibus cambiarKilo(int id, double kilo) {
-//      Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
-//    mb.setKilometraje(kilo);
-    return null;
+        MobiBusEntity mb = em.find(MobiBusEntity.class, id);
+        mb.setKilometraje(kilo);
+        em.persist(mb);
+        return TransformadorEntityDto.getInstance().EntityADtoMobibus(mb);
     }
    
    

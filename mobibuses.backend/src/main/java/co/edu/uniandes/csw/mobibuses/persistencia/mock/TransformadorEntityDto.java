@@ -225,6 +225,7 @@ public class TransformadorEntityDto {
      {
        VcubEntity en= new VcubEntity();
        
+       
        return en;  
      }
     public EstacionVcubEntity DtoAEntityEstacionVcube(EstacionVcub dto)

@@ -9,10 +9,13 @@ import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioTranviaLocal;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.ServicioPersistenciaMock;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.TransformadorEntityDto;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -24,11 +27,13 @@ import javax.ejb.Stateless;
 public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
 
     
-    private IServicioPersistenciaMockLocal persistencia;
+    @PersistenceContext
+    private EntityManager em;
 
     public ServicioTranvia()
     {
-        persistencia=new ServicioPersistenciaMock();
+        if(darTranvias().size()==0)
+          TransformadorEntityDto.getInstance().crearTranvias(em);
   
     }
     
@@ -40,7 +45,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     public List<Tranvia> darTranvias() {
     
      
-     return persistencia.findAll(Tranvia.class);
+     return e;
     
     }
 
