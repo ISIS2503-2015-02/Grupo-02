@@ -10,9 +10,12 @@ import co.edu.uniandes.csw.mobibuses.dto.Vcub;
 import co.edu.uniandes.csw.mobibuses.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioEstacionVcubMockLocal;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioPersistenciaMockLocal;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.PersistenceManager;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.ServicioPersistenciaMock;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 
 /**
@@ -20,7 +23,8 @@ import javax.ejb.Stateless;
  * @author s.correa12
  */
 @Stateless
-public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal{
+@Local
+public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Serializable{
 
      private IServicioPersistenciaMockLocal persistencia;
 
@@ -42,7 +46,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal{
 
     @Override
     public List<Vcub> darTodosVcub() {
-        ArrayList<Vcub> vcubes = new ArrayList<Vcub>();
+         ArrayList<Vcub> vcubes = new ArrayList<Vcub>();
         ArrayList<EstacionVcub> estsvc= (ArrayList<EstacionVcub>) persistencia.findAll(EstacionVcub.class);
          for (EstacionVcub actual : estsvc) {
              vcubes.addAll(actual.getVcubsEstacion());

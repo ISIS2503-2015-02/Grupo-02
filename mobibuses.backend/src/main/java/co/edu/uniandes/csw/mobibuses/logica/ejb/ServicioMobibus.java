@@ -7,14 +7,18 @@ package co.edu.uniandes.csw.mobibuses.logica.ejb;
 
 import co.edu.uniandes.csw.mobibuses.dto.Mobibus;
 import co.edu.uniandes.csw.mobibuses.dto.Ruta;
-import co.edu.uniandes.csw.mobibuses.dto.Vcub;
 import co.edu.uniandes.csw.mobibuses.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioMobibusLocal;
-import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioPersistenciaMockLocal;
-import co.edu.uniandes.csw.mobibuses.persistencia.mock.ServicioPersistenciaMock;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.MobiBusEntity;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.TransformadorEntityDto;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -22,26 +26,30 @@ import javax.ejb.Stateless;
  * @author sd.sarmiento3156
  */
 @Stateless
-public class ServicioMobibus implements IServicioMobibusLocal{
+@Local
+public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
 
-    private IServicioPersistenciaMockLocal persistencia;
+    @PersistenceContext
+    private EntityManager em;
+
 
     public ServicioMobibus()
     {
-        persistencia=new ServicioPersistenciaMock();
+      
   
     }
     
     @Override
     public List<Mobibus> darMobibuses() {
-      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        System.out.println("pide los mobibuses");
-        for (int i = 0; i < 1000; i++) {
-            for (int j = 0; j < 1000; j++) {
-                int g= i+j;
-        } 
-        }
-     return persistencia.findAll(Mobibus.class);
+        
+            Query q = em.createQuery("SELECT u from MobiBusEntity u");
+            List<MobiBusEntity> tranvias = q.getResultList();
+            ArrayList<Mobibus> dtos = new ArrayList();
+            for (MobiBusEntity tranvia : tranvias) {
+                dtos.add(TransformadorEntityDto.getInstance().EntityADtoMobibus(tranvia));
+            }
+            return dtos;
+            
     }
     
     
@@ -78,43 +86,44 @@ public class ServicioMobibus implements IServicioMobibusLocal{
 
     @Override
     public void alquilarMobibus(int id) throws OperacionInvalidaException {
-        Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
-        if(mb.getReservado()==false)
-        {
-            mb.setReservado(true);
-        }
-        else
-        {
-            throw new OperacionInvalidaException("El Mobibus con id "+id+ " se encuentra reservado.");
-        }
+//        Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
+//        if(mb.getReservado()==false)
+//        {
+//            mb.setReservado(true);
+//        }
+//        else
+//        {
+//            throw new OperacionInvalidaException("El Mobibus con id "+id+ " se encuentra reservado.");
+//        }
     }
 
     @Override
     public void liberarMobibus(int id) throws OperacionInvalidaException {
-         Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
-        if(mb.getReservado()==true)
-        {
-            mb.setReservado(false);
-        }
-        else
-        {
-            throw new OperacionInvalidaException("El Mobibus con id "+id+ " se encuentra desocupado.");
-        }
+//         Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
+//        if(mb.getReservado()==true)
+//        {
+//            mb.setReservado(false);
+//        }
+//        else
+//        {
+//            throw new OperacionInvalidaException("El Mobibus con id "+id+ " se encuentra desocupado.");
+//        }
     }
 
     
     @Override
     public void agregarRuta(int  pId, int pDist, int pTiempo ) {
-   Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, pId);
-   int g=mb.getRutas().size();
-   Ruta ruta = new Ruta(pDist, pTiempo,g+1);
-        mb.agregarRuta(ruta);
+//   Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, pId);
+//   int g=mb.getRutas().size();
+//   Ruta ruta = new Ruta(pDist, pTiempo,g+1);
+//        mb.agregarRuta(ruta);
     }
     
 
     @Override
     public String darReporteRutas(int pId) {
-        Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, pId);
+       // Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, pId);
+        Mobibus mb =null;
         String x="";
         ArrayList<Ruta> rutas= mb.getRutas();
        for (int i = 0; i < rutas.size(); i++) {
@@ -129,32 +138,32 @@ public class ServicioMobibus implements IServicioMobibusLocal{
 
     @Override
     public void eliminarRuta(int idMobibus, int idRuta) {
-       Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, idMobibus);
-   ArrayList<Ruta> rutas= mb.getRutas();
-   
-       for (int i = 0; i < rutas.size(); i++) {
-            Ruta a=rutas.get(i);
-           
-            if (a.getID()==idRuta) {
-               mb.eliminarRuta(a);
-           } 
-            
-        }
+//       Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, idMobibus);
+//   ArrayList<Ruta> rutas= mb.getRutas();
+//   
+//       for (int i = 0; i < rutas.size(); i++) {
+//            Ruta a=rutas.get(i);
+//           
+//            if (a.getID()==idRuta) {
+//               mb.eliminarRuta(a);
+//           } 
+//            
+//        }
     }
 
     @Override
     public Mobibus cambiarPosicion(int id, double longi, double lat) {
-    Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
-    mb.setPosicionLatitud(lat);
-    mb.setPosicionLongitud(longi);
-    return mb;
+//    Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
+//    mb.setPosicionLatitud(lat);
+//    mb.setPosicionLongitud(longi);
+    return null;
     }
 
     @Override
     public Mobibus cambiarKilo(int id, double kilo) {
-      Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
-    mb.setKilometraje(kilo);
-    return mb;
+//      Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
+//    mb.setKilometraje(kilo);
+    return null;
     }
    
    

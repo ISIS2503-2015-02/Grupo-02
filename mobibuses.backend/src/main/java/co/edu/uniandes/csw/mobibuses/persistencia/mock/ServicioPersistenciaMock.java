@@ -14,31 +14,20 @@ package co.edu.uniandes.csw.mobibuses.persistencia.mock;
 
 
 import co.edu.uniandes.csw.mobibuses.dto.EstacionVcub;
-import co.edu.uniandes.csw.mobibuses.dto.ExperienciaVendedor;
-import co.edu.uniandes.csw.mobibuses.dto.Mueble;
-import co.edu.uniandes.csw.mobibuses.dto.RegistroVenta;
-import co.edu.uniandes.csw.mobibuses.dto.TipoMueble;
-import co.edu.uniandes.csw.mobibuses.dto.TipoUsuario;
+
 import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
-import co.edu.uniandes.csw.mobibuses.dto.Usuario;
 import co.edu.uniandes.csw.mobibuses.dto.Vcub;
 import co.edu.uniandes.csw.mobibuses.dto.Mobibus;
 import co.edu.uniandes.csw.mobibuses.dto.Ruta;
-import co.edu.uniandes.csw.mobibuses.dto.Vendedor;
 import co.edu.uniandes.csw.mobibuses.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioPersistenciaMockRemote;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import javax.annotation.PostConstruct;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 /**
  * Implementación de los servicios de persistencia
  * @author Juan Sebastián Urrego
@@ -51,26 +40,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     //-----------------------------------------------------------
 
    
-    /**
-     * Lista con los vendedores del sistema
-     */
-    private static ArrayList<Vendedor> vendedores;
-
-    /**
-     * Lista con los muebles del sistema
-     */
-    private static ArrayList<Mueble> muebles;
-
-    /**
-     * Lista con los usuarios del sistema
-     */
-    private static ArrayList<Usuario> usuarios;
-
-    /**
-     * Lista con los registros de ventas
-     */
-    private static ArrayList<RegistroVenta> registrosVentas;
-    
+   
     
     //lista de los tranvias
     
@@ -113,11 +83,11 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     
     public ServicioPersistenciaMock()
     {
-        entityManager = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();      
-//        TransformadorEntityDto.getInstance().crearMobibibuses(entityManager);
+ //        TransformadorEntityDto.getInstance().crearMobibibuses(entityManager);
  //       TransformadorEntityDto.getInstance().crearMobibibuses(entityManager);
         TransformadorEntityDto.getInstance().crearTranvias(entityManager);
-        //TransformadorEntityDto.getInstance().crearVcubes(entityManager);
+        //TransformadorEntityDto.getInstance().crearVcubes(entityManager);   
+                        
         
     }
 
@@ -192,63 +162,64 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     @Override
     public void delete(Object obj) throws OperacionInvalidaException
     {
-        if (obj instanceof Ruta)
-        {
-            Vendedor vendedorABorrar = (Vendedor) obj;
-
-            for (int e = 0; e < vendedores.size(); e++)
-            {
-                Vendedor ven = (Vendedor) vendedores.get(e);
-                if (ven.getIdentificacion() == vendedorABorrar.getIdentificacion())
-                {
-                    vendedores.remove(e);
-                    break;
-                }
-            }
-
-        } 
-        else if (obj instanceof Mobibus)
-        {
-            Mueble mueble;
-            Mueble eliminar = (Mueble) obj;
-            for (int i = 0; i < muebles.size(); i++)
-            {
-                mueble = muebles.get(i);
-                if (eliminar.getReferencia() == mueble.getReferencia())
-                {
-                    muebles.remove(i);
-                    break;
-                }
-
-            }
-
-        } 
-        else if (obj instanceof Tranvia)
-        {
-            Usuario usuarioABorrar = (Usuario) obj;
-            for (RegistroVenta rv : registrosVentas)
-            {
-                if (rv.getComprador().getLogin().equals(usuarioABorrar.getLogin()))
-                {
-                    System.out.print("no borrado");
-                    throw new OperacionInvalidaException("El usuario ha realizado comprar y por lo tanto no puede ser eliminado del sistema.");
-                }
-            }
-            if (usuarioABorrar != null && usuarioABorrar.getLogin() != null)
-            {
-                for (int e = 0; e < usuarios.size(); e++)
-                {
-                    Usuario ven = (Usuario) usuarios.get(e);
-                    if (ven.getLogin().equals(usuarioABorrar.getLogin()))
-                    {
-                        usuarios.remove(e);
-                        System.out.print("borrado");
-                        break;
-                    }
-                }
-            }
-        }
-           else if (obj instanceof Vcub)
+//        if (obj instanceof Ruta)
+//        {
+//            Vendedor vendedorABorrar = (Vendedor) obj;
+//
+//            for (int e = 0; e < vendedores.size(); e++)
+//            {
+//                Vendedor ven = (Vendedor) vendedores.get(e);
+//                if (ven.getIdentificacion() == vendedorABorrar.getIdentificacion())
+//                {
+//                    vendedores.remove(e);
+//                    break;
+//                }
+//            }
+//
+//        } 
+//        else if (obj instanceof Mobibus)
+//        {
+//            Mueble mueble;
+//            Mueble eliminar = (Mueble) obj;
+//            for (int i = 0; i < muebles.size(); i++)
+//            {
+//                mueble = muebles.get(i);
+//                if (eliminar.getReferencia() == mueble.getReferencia())
+//                {
+//                    muebles.remove(i);
+//                    break;
+//                }
+//
+//            }
+//
+//        } 
+//        else if (obj instanceof Tranvia)
+//        {
+//            Usuario usuarioABorrar = (Usuario) obj;
+//            for (RegistroVenta rv : registrosVentas)
+//            {
+//                if (rv.getComprador().getLogin().equals(usuarioABorrar.getLogin()))
+//                {
+//                    System.out.print("no borrado");
+//                    throw new OperacionInvalidaException("El usuario ha realizado comprar y por lo tanto no puede ser eliminado del sistema.");
+//                }
+//            }
+//            if (usuarioABorrar != null && usuarioABorrar.getLogin() != null)
+//            {
+//                for (int e = 0; e < usuarios.size(); e++)
+//                {
+//                    Usuario ven = (Usuario) usuarios.get(e);
+//                    if (ven.getLogin().equals(usuarioABorrar.getLogin()))
+//                    {
+//                        usuarios.remove(e);
+//                        System.out.print("borrado");
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//           else 
+        if (obj instanceof Vcub)
         {
             Vcub eliminar = (Vcub) obj;
             Vcub vc;
@@ -341,41 +312,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     @Override
     public Object findById(Class c, Object id)
     {
-        if (c.equals(Vendedor.class))
-        {
-            entityManager.find(c, id);
-            for (Object v : findAll(c))
-            {
-                Vendedor ven = (Vendedor) v;
-                if (ven.getIdentificacion() == Long.parseLong(id.toString()))
-                {
-                    return ven;
-                }
-            }
-        } 
-        else if (c.equals(Mueble.class))
-        {
-            for (Object v : findAll(c))
-            {
-                Mueble mue = (Mueble) v;
-                if (Long.parseLong(id.toString())== mue.getReferencia())
-                {
-                    return mue;
-                }
-            }
-        } 
-        else if (c.equals(Usuario.class))
-        {
-            for (Object v : findAll(c))
-            {
-                Usuario mue = (Usuario) v;
-                if (mue.getLogin().equals(id))
-                {
-                    return mue;
-                }
-            }
-        }
-        else if(c.equals(Vcub.class)){
+        if(c.equals(Vcub.class)){
             for(Object v:findAll(c))
             {
                 Vcub vc = (Vcub)v;

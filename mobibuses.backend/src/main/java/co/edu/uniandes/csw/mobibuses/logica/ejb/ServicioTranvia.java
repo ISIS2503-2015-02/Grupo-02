@@ -6,12 +6,12 @@
 package co.edu.uniandes.csw.mobibuses.logica.ejb;
 
 import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
-import co.edu.uniandes.csw.mobibuses.dto.Usuario;
-import co.edu.uniandes.csw.mobibuses.dto.Vcub;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioTranviaLocal;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.ServicioPersistenciaMock;
+import java.io.Serializable;
 import java.util.List;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 
 /**
@@ -20,7 +20,8 @@ import javax.ejb.Stateless;
  */
 
 @Stateless
-public class ServicioTranvia implements IServicioTranviaLocal{
+@Local
+public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
 
     
     private IServicioPersistenciaMockLocal persistencia;

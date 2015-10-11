@@ -13,12 +13,14 @@ import co.edu.uniandes.csw.mobibuses.dto.Ruta;
 import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
 import co.edu.uniandes.csw.mobibuses.dto.Vcub;
 import java.util.ArrayList;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 
 /**
  *
  * @author cf.brochero10
  */
+
 public class TransformadorEntityDto {
     
     public static final TransformadorEntityDto t= new TransformadorEntityDto();
@@ -135,18 +137,9 @@ public class TransformadorEntityDto {
                 Tranvia x = new Tranvia("tranvia"+(i), ruta, numero, numero2, 3, 3, 3, kilometraje,nombreConductor,tiempoTrayecto) ;
             
                 
-                      try {
-                                entityManager.getTransaction().begin();
-                                entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityTranvia(x));
-                                entityManager.getTransaction().rollback();
-             System.out.println("Se persistio correctamente tranvia");
-           
-        } catch (Exception t) {
-            System.out.println("Se toteo "+t.getMessage());
-     
-            t.printStackTrace();
-            
-        }
+                    
+                entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityTranvia(x));
+                               
                
                 
             

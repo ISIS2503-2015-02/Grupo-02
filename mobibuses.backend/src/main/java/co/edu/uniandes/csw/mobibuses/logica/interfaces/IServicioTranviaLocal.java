@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.mobibuses.logica.interfaces;
 
 import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
-import co.edu.uniandes.csw.mobibuses.dto.Usuario;
 import java.util.List;
 import javax.ejb.Local;
 
