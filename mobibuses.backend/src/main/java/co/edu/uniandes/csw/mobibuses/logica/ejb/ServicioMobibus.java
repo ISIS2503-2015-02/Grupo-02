@@ -152,6 +152,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
         MobiBusEntity mb = em.find(MobiBusEntity.class, id);
         mb.setPosicionLatitud(lat);
         mb.setPosicionLongitud(longi);
+        em.persist(mb);
         return TransformadorEntityDto.getInstance().EntityADtoMobibus(mb);
     }
 
