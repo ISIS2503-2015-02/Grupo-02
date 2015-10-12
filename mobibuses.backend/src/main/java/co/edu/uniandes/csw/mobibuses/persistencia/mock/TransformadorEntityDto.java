@@ -13,6 +13,8 @@ import co.edu.uniandes.csw.mobibuses.dto.Ruta;
 import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
 import co.edu.uniandes.csw.mobibuses.dto.Vcub;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 
@@ -206,7 +208,8 @@ public class TransformadorEntityDto {
                 
                       try {
                           VcubEntity vce = TransformadorEntityDto.getInstance().DtoAEntityVcube(nuevo);
-                          vce.setEstacionVcub(entityManager.find(EstacionVcubEntity.class, actual.getId()));
+                          vce.setEstacionVcub(entityManager.find(EstacionVcubEntity.class,new Long(actual.getId())));
+                          vce.setId(nuevo.getId());
             entityManager.persist(vce);
             System.out.println("Se persistio correctamente vcub");
            
@@ -229,6 +232,7 @@ public class TransformadorEntityDto {
        en.setLatitud(dto.getLatitud());
        en.setLongitud(dto.getLongitud());
        en.setOcupado(dto.isOcupado());
+       en.setId(dto.getId());
        return en;  
      }
     public EstacionVcubEntity DtoAEntityEstacionVcube(EstacionVcub dto)
@@ -238,6 +242,15 @@ public class TransformadorEntityDto {
          en.setLatitudEstacion(dto.getLatitudEstacion());
          en.setLongitudEstacion(dto.getLongitudEstacion());
          en.setPrestados(dto.getPrestados());
+         ArrayList<Vcub> arr= dto.getVcubsEstacion();
+         ArrayList<VcubEntity> arr1 = new ArrayList();
+         for(Vcub vc : arr)
+         {
+             VcubEntity vce = DtoAEntityVcube(vc);
+             arr1.add(vce);
+         }
+         Set<VcubEntity> set = new HashSet(arr1);
+         en.setvCubs(set);
          return en;
      }
     public RutaEntity DtoAEntityRutaEntity(Ruta dto)
@@ -277,11 +290,23 @@ public class TransformadorEntityDto {
     public Vcub EntityADtoVcube(VcubEntity entity)
      {
          Vcub dto = new Vcub(entity.getId(), entity.getEstacionVcub().getId());
+         dto.setOcupado(entity.getOcupado());
+         dto.setLatitud(entity.getLatitud());
+         dto.setLongitud(entity.getLongitud());
          return dto;
      }
     public EstacionVcub EntityADtoEstacionVcube(EstacionVcubEntity entity)
      {
          EstacionVcub dto = new EstacionVcub(entity.getId(), entity.getLongitudEstacion(), entity.getLatitudEstacion());
+         dto.setPrestados(entity.getPrestados());
+         Set<VcubEntity> set = entity.getvCubs();
+         ArrayList<Vcub> arr = new ArrayList();
+        for(VcubEntity vc : set)
+        {
+            Vcub n = EntityADtoVcube(vc);
+            arr.add(n);
+        } 
+         dto.setVcubsEstacion(arr);
          return dto;
          
      }
