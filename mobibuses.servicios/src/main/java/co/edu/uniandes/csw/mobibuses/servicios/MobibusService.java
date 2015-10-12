@@ -8,11 +8,15 @@ package co.edu.uniandes.csw.mobibuses.servicios;
 import co.edu.uniandes.csw.mobibuses.dto.Mobibus;
 import co.edu.uniandes.csw.mobibuses.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioMobibusLocal;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.PersistenceManager;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -33,6 +37,8 @@ import javax.ws.rs.core.MediaType;
 
 public class MobibusService {
     
+  
+
      @EJB
     private IServicioMobibusLocal mobibusEjb;
     

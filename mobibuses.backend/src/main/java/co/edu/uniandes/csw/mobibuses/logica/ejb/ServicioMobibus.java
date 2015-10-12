@@ -10,11 +10,13 @@ import co.edu.uniandes.csw.mobibuses.dto.Ruta;
 import co.edu.uniandes.csw.mobibuses.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioMobibusLocal;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.MobiBusEntity;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.PersistenceManager;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.RutaEntity;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.TransformadorEntityDto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -29,13 +31,13 @@ import javax.persistence.Query;
 @Stateless
 @Local
 public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
-
-    @PersistenceContext
+    
+       @PersistenceContext
     private EntityManager em;
-
 
     public ServicioMobibus()
     {
+        em = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
       if(darMobibuses().size()==0)
           TransformadorEntityDto.getInstance().crearMobibibuses(em);
   

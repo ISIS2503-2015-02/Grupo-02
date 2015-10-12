@@ -159,7 +159,7 @@ public class TransformadorEntityDto {
                 double longitud = 0 ;
                 double latitud = 0;
                 
-               EstacionVcub nueva = new EstacionVcub(i,longitud,latitud);
+               EstacionVcub nueva = new EstacionVcub(i+1,longitud,latitud);
                estacionesVcub.add(nueva);
                
                      
@@ -198,14 +198,16 @@ public class TransformadorEntityDto {
                     numeroMax = 700;
                 }
                 EstacionVcub actual = (EstacionVcub) estacionesVcub.get(indiceEstacion);
-                Vcub nuevo = new Vcub(b,actual.getId());
+                Vcub nuevo = new Vcub(b+1,actual.getId());
                 vcubes.add(nuevo);
                 actual.getVcubsEstacion().add(nuevo);
                 
                 
                 
                       try {
-            entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityVcube(nuevo));
+                          VcubEntity vce = TransformadorEntityDto.getInstance().DtoAEntityVcube(nuevo);
+                          vce.setEstacionVcub(entityManager.find(EstacionVcubEntity.class, actual.getId()));
+            entityManager.persist(vce);
             System.out.println("Se persistio correctamente vcub");
            
         } catch (Exception t) {
@@ -224,14 +226,18 @@ public class TransformadorEntityDto {
     public VcubEntity DtoAEntityVcube(Vcub dto)
      {
        VcubEntity en= new VcubEntity();
-       
-       
+       en.setLatitud(dto.getLatitud());
+       en.setLongitud(dto.getLongitud());
+       en.setOcupado(dto.isOcupado());
        return en;  
      }
     public EstacionVcubEntity DtoAEntityEstacionVcube(EstacionVcub dto)
      {
          EstacionVcubEntity en= new EstacionVcubEntity();
-         
+         en.setId(dto.getId());
+         en.setLatitudEstacion(dto.getLatitudEstacion());
+         en.setLongitudEstacion(dto.getLongitudEstacion());
+         en.setPrestados(dto.getPrestados());
          return en;
      }
     public RutaEntity DtoAEntityRutaEntity(Ruta dto)

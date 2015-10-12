@@ -8,9 +8,13 @@ package co.edu.uniandes.csw.mobibuses.servicios;
 
 import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioTranviaLocal;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.PersistenceManager;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -30,6 +34,8 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 
 public class TranviaService {
+    
+   
     
      @EJB
     private IServicioTranviaLocal tranviaEjb;

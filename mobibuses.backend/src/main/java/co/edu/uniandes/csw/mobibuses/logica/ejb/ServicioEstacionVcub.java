@@ -21,7 +21,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import javax.annotation.PostConstruct;
 import javax.ejb.Local;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -35,10 +37,13 @@ import javax.persistence.Query;
 @Local
 public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Serializable{
 
-     @PersistenceContext
+    
+       @PersistenceContext
     private EntityManager em;
-
+     
+    
     public ServicioEstacionVcub() {
+        em = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
          if(darTodosVcub().size()==0)
           TransformadorEntityDto.getInstance().crearVcubes(em);
     }

@@ -8,13 +8,16 @@ package co.edu.uniandes.csw.mobibuses.logica.ejb;
 import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioTranviaLocal;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.PersistenceManager;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.ServicioPersistenciaMock;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.TransformadorEntityDto;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.TranviaEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.Local;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,12 +32,12 @@ import javax.persistence.Query;
 @Local
 public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
 
-    
-    @PersistenceContext
+       @PersistenceContext
     private EntityManager em;
-
+  
     public ServicioTranvia()
     {
+        em = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
         if(darTranvias().size()==0)
           TransformadorEntityDto.getInstance().crearTranvias(em);
   
