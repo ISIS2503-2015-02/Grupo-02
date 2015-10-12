@@ -10,12 +10,15 @@ import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioPersistenciaMock
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioTranviaLocal;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.ServicioPersistenciaMock;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.TransformadorEntityDto;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.TranviaEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -42,18 +45,24 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     @Override
     
     
-    public List<Tranvia> darTranvias() {
-    
-     
-     return e;
+    public List<Tranvia> darTranvias() 
+    {
+    Query q = em.createQuery("SELECT a FROM TraviaEntity a");
+     List<TranviaEntity> l = q.getResultList();
+     ArrayList<Tranvia> ltr = new ArrayList();
+     for(TranviaEntity te: l)
+     {
+         ltr.add(TransformadorEntityDto.getInstance().EntityADtoTranvia(te));
+     }
+     return ltr;
     
     }
 
     @Override
     public void cambiarEstado(String id, int emergencia, int valor) {
        
-   Tranvia tranvia =(Tranvia) persistencia.findById(Tranvia.class, id);
-        
+   TranviaEntity tranvia =em.find(TranviaEntity.class, id);
+         
          //modifico el nivel de choque
         if(emergencia==1)
         {
@@ -64,7 +73,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
         //modifico el nivel de temperatura
         if(emergencia==2)
         {
-            tranvia.setNivelTemparatura(valor);
+            tranvia.setNivelTemperatura(valor);
         }
         
         // el boton de panico
@@ -73,7 +82,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
             tranvia.setNivelPanico(valor);
             
         }
-        
+        em.persist(tranvia);
     }
 
     @Override
@@ -264,11 +273,10 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     public void cambiarCoord(String id, double co1, double co2) {
        
         
-         Tranvia tranvia =(Tranvia) persistencia.findById(Tranvia.class, id);
-         
+          TranviaEntity tranvia =em.find(TranviaEntity.class, id);
          tranvia.setPosicionLatitud(co1);
            tranvia.setPosicionLongitud(co2);
-        
+        em.persist(tranvia);
         
         
     }
