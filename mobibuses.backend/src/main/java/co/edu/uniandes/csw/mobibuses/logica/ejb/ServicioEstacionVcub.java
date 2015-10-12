@@ -16,9 +16,11 @@ import co.edu.uniandes.csw.mobibuses.persistencia.mock.MobiBusEntity;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.PersistenceManager;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.ServicioPersistenciaMock;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.TransformadorEntityDto;
+import co.edu.uniandes.csw.mobibuses.persistencia.mock.VcubEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -55,32 +57,45 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
 
     @Override
     public List<Vcub> darVcubesEstacion(int IDestacion) {
-        EstacionVcub evc= (EstacionVcub) persistencia.findById(EstacionVcub.class, IDestacion);
-        return evc.getVcubsEstacion();
+        Query q = em.createQuery("SELECT v from VcubEntity v WHERE v.estacionVcub.id = "+IDestacion);
+        List<VcubEntity> vce =q.getResultList();
+        ArrayList<Vcub> dtos = new ArrayList();
+        for(VcubEntity vc : vce)
+        {
+            dtos.add(TransformadorEntityDto.getInstance().EntityADtoVcube(vc));
+        }
+        return dtos;
+ 
     }
 
     @Override
     public List<Vcub> darTodosVcub() {
-         ArrayList<Vcub> vcubes = new ArrayList<Vcub>();
-        ArrayList<EstacionVcub> estsvc= (ArrayList<EstacionVcub>) persistencia.findAll(EstacionVcub.class);
-         for (EstacionVcub actual : estsvc) {
-             vcubes.addAll(actual.getVcubsEstacion());
-         }
-        return vcubes;
+          Query q = em.createQuery("SELECT v from VcubEntity v" );
+        List<VcubEntity> vce =q.getResultList();
+        ArrayList<Vcub> dtos = new ArrayList();
+        for(VcubEntity vc : vce)
+        {
+            dtos.add(TransformadorEntityDto.getInstance().EntityADtoVcube(vc));
+        }
+        return dtos;
     }
 
     @Override
     public Vcub alquilarVcub(int IDestacion) throws OperacionInvalidaException
     {
-                 EstacionVcub est = (EstacionVcub) persistencia.findById(EstacionVcub.class, IDestacion);
-                Vcub resp = null;
-                 ArrayList<Vcub> vcubes = est.getVcubsEstacion();
-         for (Vcub actual : vcubes) {
-             if(actual.isOcupado().equals(Vcub.DISPONIBLE))
+        EstacionVcubEntity este = em.find(EstacionVcubEntity.class, IDestacion);
+       // EstacionVcub est = TransformadorEntityDto.getInstance().EntityADtoEstacionVcube(este);
+        Vcub resp = null;
+        Set<VcubEntity> vcubes = este.getvCubs();
+         for (VcubEntity actual : vcubes) {
+             if(actual.getOcupado().equals(Vcub.DISPONIBLE))
              {
                  actual.setOcupado(Vcub.OCUPADO);
-                 resp = actual;
-                 est.setPrestados(est.getPrestados()+1);
+                 actual.setOcupado(Vcub.OCUPADO);
+                 resp = TransformadorEntityDto.getInstance().EntityADtoVcube(actual);
+                 este.setPrestados(este.getPrestados()+1);
+                 em.persist(actual);
+                 em.persist(este);
                  break;
              }
          }
@@ -88,12 +103,14 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
                  {
                      throw new OperacionInvalidaException("No hay vcubs disponibles en la estacion: "+ IDestacion);
                  }
-                 else if(resp!=null && est.getPrestados()==(int)(est.getVcubsEstacion().size()*(0.1)))
+                 else if(resp!=null && este.getPrestados()==(int)(este.getvCubs().size()*(0.1)))
                  {
-                     for (Vcub actual : vcubes) {
-                         if(actual.isOcupado().equals(Vcub.NO_DISPONIBLE))
+                     for (VcubEntity actual : vcubes) {
+                         if(actual.getOcupado().equals(Vcub.NO_DISPONIBLE))
                          {
                              actual.setOcupado(Vcub.DISPONIBLE);
+                             em.persist(actual);
+                             em.persist(este);
                          }
                      }
                  }
@@ -104,36 +121,40 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     @Override
     public Vcub liberarVcub(int IDestacion,int IDdevolver) throws OperacionInvalidaException 
     {
-        EstacionVcub estacion = (EstacionVcub) persistencia.findById(EstacionVcub.class, IDestacion);
-        Vcub devolver = (Vcub) persistencia.findById(Vcub.class, IDdevolver);
-        EstacionVcub dondeSeAlquilo = (EstacionVcub) persistencia.findById(EstacionVcub.class, devolver.getEstacion());
+        EstacionVcubEntity est = em.find(EstacionVcubEntity.class, IDestacion);
+        VcubEntity vcd = em.find(VcubEntity.class, IDdevolver);
+        EstacionVcubEntity estValquilo = em.find(EstacionVcubEntity.class, vcd.getEstacionVcub().getId());
+        
         Vcub devuelto =null;
-        if(dondeSeAlquilo.getId()==estacion.getId())
+        if(estValquilo.getId()==est.getId())
         {
-            ArrayList<Vcub> vcubes = estacion.getVcubsEstacion();
-            for (Vcub vc : vcubes) {
-                if(vc.getId()==devolver.getId())
+            Set<VcubEntity> vcubes = est.getvCubs();
+            for (VcubEntity vc : vcubes) {
+                if(vc.getId()==vcd.getId())
                 {
-                    devuelto=vc;
+                    devuelto=TransformadorEntityDto.getInstance().EntityADtoVcube(vc);
                     vc.setOcupado(Vcub.DISPONIBLE);
-                    estacion.setPrestados(estacion.getPrestados()-1);
-                    persistencia.update(vc);
+                    est.setPrestados(est.getPrestados()-1);
+                    em.persist(vc);
+                    em.persist(est);
                     break;
                 }
             }
         }
         else
         {
-            ArrayList<Vcub> nueva  =estacion.getVcubsEstacion();
-            ArrayList<Vcub> vieja = ((EstacionVcub) persistencia.findById(EstacionVcub.class, devolver.getEstacion())).getVcubsEstacion();
-            vieja.remove(devolver);
-            devolver.setOcupado(Vcub.DISPONIBLE);
-            devolver.setEstacion(estacion.getId());
-            EstacionVcub ant =(EstacionVcub) persistencia.findById(EstacionVcub.class, devolver.getEstacion());
+            Set<VcubEntity> nueva  =est.getvCubs();
+            Set<VcubEntity> vieja = em.find(EstacionVcubEntity.class,estValquilo.getId()).getvCubs();
+            vieja.remove(vcd);
+            vcd.setOcupado(Vcub.DISPONIBLE);
+            vcd.setEstacionVcub(est);
+            EstacionVcubEntity ant = em.find(EstacionVcubEntity.class,estValquilo.getId());
             ant.setPrestados(ant.getPrestados()-1);
-            nueva.add(devolver);
-            devuelto = devolver;
-            persistencia.update(devolver);
+            nueva.add(vcd);
+            devuelto = TransformadorEntityDto.getInstance().EntityADtoVcube(vcd);
+           em.persist(vcd);
+           em.persist(est);
+           em.persist(estValquilo);
         }
         if(devuelto == null)
         {
@@ -144,51 +165,55 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
 
     @Override
     public void reducirVcubesTodas() {
-    ArrayList<EstacionVcub> estaciones =(ArrayList<EstacionVcub>) persistencia.findAll(EstacionVcub.class);
+        Query q = em.createQuery("SELECT u from EstacionVcubEntity u");
+            List<EstacionVcubEntity> estaciones = q.getResultList();
             {
-        for (EstacionVcub est : estaciones) {
-            int numero30 = (int) (est.getVcubsEstacion().size()*(0.3));
+        for (EstacionVcubEntity est : estaciones) {
+            int numero30 = (int) (est.getvCubs().size()*(0.3));
             int j = 0 ;
             int index = 0 ;
-            ArrayList<Vcub> vcubes = est.getVcubsEstacion();
+            Set<VcubEntity> vcubes = est.getvCubs();
             while(j<=numero30 && index<vcubes.size())
             {
-                Vcub actual = vcubes.get(index);
-                if(actual.isOcupado().equals(Vcub.DISPONIBLE))
+                VcubEntity actual = vcubes.toArray(new VcubEntity[vcubes.size()])[index];
+                if(actual.getOcupado().equals(Vcub.DISPONIBLE))
                 {
                     j++;
                     actual.setOcupado(Vcub.NO_DISPONIBLE);
+                    em.persist(actual);
                 }
                 index++;
             }
+            em.persist(est);
         }
             }
     }
 
     @Override
     public void reducirVcubesEspecifica(int IDestacion) {
-         EstacionVcub est = (EstacionVcub) persistencia.findById(EstacionVcub.class, IDestacion);
-                    int numero30 = (int) (est.getVcubsEstacion().size()*(0.3));
-                    int j = 0 ;
-                    int index = 0 ;
-                    ArrayList<Vcub> vcubes = est.getVcubsEstacion();
-                    while(j<=numero30 && index<vcubes.size())
-                    {
-                        Vcub actual = vcubes.get(index);
-                        if(actual.isOcupado().equals(Vcub.DISPONIBLE))
-                        {
-                            j++;
-                            actual.setOcupado(Vcub.NO_DISPONIBLE);
-                        }
-                        index++;
-                    }
+         EstacionVcubEntity est = em.find(EstacionVcubEntity.class, IDestacion);
+                    int numero30 = (int) (est.getvCubs().size()*(0.3));
+            int j = 0 ;
+            int index = 0 ;
+            Set<VcubEntity> vcubes = est.getvCubs();
+            while(j<=numero30 && index<vcubes.size())
+            {
+                VcubEntity actual = vcubes.toArray(new VcubEntity[vcubes.size()])[index];
+                if(actual.getOcupado().equals(Vcub.DISPONIBLE))
+                {
+                    j++;
+                    actual.setOcupado(Vcub.NO_DISPONIBLE);
+                    em.persist(actual);
+                }
+                index++;
+            }
+            em.persist(est);
     }
 
     @Override
     public List<Vcub> darVcubesDisponiblesEstacion(int IDestacion) {
         ArrayList<Vcub> sol = new ArrayList<Vcub>();
-        EstacionVcub estacion = (EstacionVcub) persistencia.findById(EstacionVcub.class, IDestacion);
-        ArrayList<Vcub> arr = estacion.getVcubsEstacion();
+        List<Vcub> arr = darVcubesEstacion(IDestacion);
         for (Vcub arr1 : arr)
         {
             if(arr1.isOcupado().equals(Vcub.DISPONIBLE))
@@ -200,10 +225,10 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     }
 
     @Override
-    public List<Vcub> darVcubesOcupadosEstacion(int IDestacion) {
-    ArrayList<Vcub> sol = new ArrayList<Vcub>();
-        EstacionVcub estacion = (EstacionVcub) persistencia.findById(EstacionVcub.class, IDestacion);
-        ArrayList<Vcub> arr = estacion.getVcubsEstacion();
+    public List<Vcub> darVcubesOcupadosEstacion(int IDestacion)
+    {
+        ArrayList<Vcub> sol = new ArrayList<Vcub>();
+        List<Vcub> arr = darVcubesEstacion(IDestacion);
         for (Vcub arr1 : arr)
         {
             if(arr1.isOcupado().equals(Vcub.OCUPADO))
@@ -218,8 +243,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     public List<Vcub> darVcubesNoDisponiblesEstacion(int IDestacion) {
 
     ArrayList<Vcub> sol = new ArrayList<Vcub>();
-        EstacionVcub estacion = (EstacionVcub) persistencia.findById(EstacionVcub.class, IDestacion);
-        ArrayList<Vcub> arr = estacion.getVcubsEstacion();
+        List<Vcub> arr = darVcubesEstacion(IDestacion);
         for (Vcub arr1 : arr)
         {
             if(arr1.isOcupado().equals(Vcub.NO_DISPONIBLE))
@@ -233,18 +257,19 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     @Override
     public Vcub modificarPosVcub(int idVcub, double longitud, double latitud) 
     {
-        Vcub vc = (Vcub) persistencia.findById(Vcub.class, idVcub);
-        EstacionVcub evc = (EstacionVcub) persistencia.findById(EstacionVcub.class, vc.getEstacion());
-        ArrayList<Vcub> arr = evc.getVcubsEstacion();
+        VcubEntity vc = em.find(VcubEntity.class, idVcub);
+        EstacionVcubEntity evc = em.find(EstacionVcubEntity.class, vc.getEstacionVcub().getId());
+        Set<VcubEntity> arr = evc.getvCubs();
         Vcub r = null;
-        for (Vcub arr1 : arr)
+        for (VcubEntity arr1 : arr)
         {
             if(arr1.getId()==idVcub)
             {
                 arr1.setLatitud(latitud);
                 arr1.setLongitud(longitud);
-                persistencia.update(arr1);
-                r=arr1;
+                em.persist(arr1);
+                em.persist(evc);
+                r=TransformadorEntityDto.getInstance().EntityADtoVcube(arr1);
                 break;
             }
         }
