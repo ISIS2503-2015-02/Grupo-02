@@ -23,9 +23,9 @@ public class EstacionVcub {
     
     private int prestados;
 
-    public EstacionVcub(long id, double longitudEstacion, double latitudEstacion) {
+    public EstacionVcub(long id, double longitudEstacio, double latitudEstacion) {
         this.id = id;
-        this.longitudEstacion = longitudEstacion;
+        this.longitudEstacion = longitudEstacio;
         this.latitudEstacion = latitudEstacion;
         vcubsEstacion = new ArrayList<Vcub>(); 
         prestados = 0;
@@ -59,8 +59,8 @@ public class EstacionVcub {
         return latitudEstacion;
     }
 
-    public void setLatitudEstacion(double latitudEstacion) {
-        this.latitudEstacion = latitudEstacion;
+    public void setLatitudEstacion(double latitudEstacio) {
+        this.latitudEstacion = latitudEstacio;
     }
 
     public int getPrestados() {

@@ -5,8 +5,7 @@
  */
 package co.edu.uniandes.csw.mobibuses.persistencia.mock;
 
-import co.edu.uniandes.csw.mobibuses.persistencia.mock.EstacionVcubEntity;
-import co.edu.uniandes.csw.mobibuses.persistencia.mock.EstacionVcubEntity;
+
 import co.edu.uniandes.csw.mobibuses.dto.EstacionVcub;
 import co.edu.uniandes.csw.mobibuses.dto.Mobibus;
 import co.edu.uniandes.csw.mobibuses.dto.Ruta;
@@ -15,7 +14,6 @@ import co.edu.uniandes.csw.mobibuses.dto.Vcub;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 
 /**
@@ -47,12 +45,12 @@ public class TransformadorEntityDto {
              
             for(int i = 0 ; i<250 ; i++)            {
                 
-               double numero = (Math.random()*0.41)+4.43;
+               double num = (Math.random()*0.41)+4.43;
                 
                 double numero2=(Math.random()*(-0.213))-74.001;
                 
             
-                Mobibus m= new Mobibus("Mobibus"+i, numero, numero2, 56+i, "ss",i);
+                Mobibus m= new Mobibus("Mobibus"+i, num, numero2, 56+i, "ss",i);
                 
                 MobiBusEntity mo= new MobiBusEntity();
                 mo.setFechaReservacion(m.getFechaReservacion());

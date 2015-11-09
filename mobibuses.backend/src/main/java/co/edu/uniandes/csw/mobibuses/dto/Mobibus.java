@@ -49,13 +49,13 @@ public class Mobibus {
      rutas= new ArrayList<Ruta>();
     }
 
-   public void agregarRuta(Ruta pRuta)
+   public void agregarRuta(Ruta pRutat)
    {
-       rutas.add(pRuta);
+       rutas.add(pRutat);
    }
-   public void eliminarRuta(Ruta pRuta)
+   public void eliminarRuta(Ruta pRutat)
    {
-       rutas.remove(pRuta);
+       rutas.remove(pRutat);
    }
     
    public ArrayList<Ruta> getRutas()

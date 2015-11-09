@@ -51,11 +51,11 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     public List<Tranvia> darTranvias() 
     {
     Query q = em.createQuery("SELECT u FROM TranviaEntity u");
-     List<TranviaEntity> l = q.getResultList();
+     List<TranviaEntity> lista = q.getResultList();
      ArrayList<Tranvia> ltr = new ArrayList();
-     for(TranviaEntity te: l)
+     for(TranviaEntity trv: lista)
      {
-         ltr.add(TransformadorEntityDto.getInstance().EntityADtoTranvia(te));
+         ltr.add(TransformadorEntityDto.getInstance().EntityADtoTranvia(trv));
      }
      return ltr;
     

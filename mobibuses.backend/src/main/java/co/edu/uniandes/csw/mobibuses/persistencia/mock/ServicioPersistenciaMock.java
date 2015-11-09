@@ -100,23 +100,23 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
      * @param obj Objeto que representa la instancia de la entidad que se quiere crear.
      */
     @Override
-    public void create(Object obj) throws OperacionInvalidaException
+    public void create(Object objt) throws OperacionInvalidaException
     {
-        if(obj instanceof EstacionVcub)
+        if(objt instanceof EstacionVcub)
         {
-            entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityEstacionVcube((EstacionVcub)obj));
+            entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityEstacionVcube((EstacionVcub)objt));
         }
-        else if(obj instanceof Vcub)
+        else if(objt instanceof Vcub)
         {
-            entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityVcube((Vcub)obj));
+            entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityVcube((Vcub)objt));
         }
-        else if(obj instanceof Mobibus)
+        else if(objt instanceof Mobibus)
         {
-            entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityMobibus((Mobibus)obj));
+            entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityMobibus((Mobibus)objt));
         }
-        else if(obj instanceof Tranvia)
+        else if(objt instanceof Tranvia)
         {
-          entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityTranvia((Tranvia)obj));
+          entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityTranvia((Tranvia)objt));
         }
 //        else if(obj instanceof Ruta)
 //        {

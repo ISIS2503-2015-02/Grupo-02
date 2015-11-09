@@ -64,11 +64,11 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     @Override
     public List<Vcub> darVcubesEstacion(int IDestacion) {
         Query q = em.createQuery("SELECT v from VcubEntity v WHERE v.estacionVcub.id = "+IDestacion);
-        List<VcubEntity> vce =q.getResultList();
+        List<VcubEntity> vced =q.getResultList();
         ArrayList<Vcub> dtos = new ArrayList();
-        for(VcubEntity vc : vce)
+        for(VcubEntity vcub : vced)
         {
-            dtos.add(TransformadorEntityDto.getInstance().EntityADtoVcube(vc));
+            dtos.add(TransformadorEntityDto.getInstance().EntityADtoVcube(vcub));
         }
         return dtos;
  
