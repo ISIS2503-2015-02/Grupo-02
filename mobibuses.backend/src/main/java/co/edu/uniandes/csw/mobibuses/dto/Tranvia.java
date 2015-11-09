@@ -163,6 +163,17 @@ public class Tranvia {
        nivelTemperatura=pTemperatura;
     }
     
+     public void setNivelTemparatura2(int pTemperatura)
+    {
+       nivelTemperatura=pTemperatura;
+    }
+    public void setNivelTemparatura3(int pTemperatura)
+    {
+       nivelTemperatura=pTemperatura;
+    }
+    
+    
+    
     
     
     

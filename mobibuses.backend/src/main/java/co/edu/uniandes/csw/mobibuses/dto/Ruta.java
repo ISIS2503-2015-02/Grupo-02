@@ -18,6 +18,8 @@ public class Ruta {
     
     private int tiempò;
     
+    private int cont;
+    
     
     public Ruta(int pDistancia, int pTiempo, long pId)
     {
@@ -26,6 +28,11 @@ public class Ruta {
         tiempò=pTiempo;
         id=pId;
     }
+     public int getCont()
+     {
+         return this.cont;
+     }
+    
     
     public int getDistancia()
     {
