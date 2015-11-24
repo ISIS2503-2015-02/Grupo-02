@@ -69,7 +69,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     @Override
     public void cambiarEstado(String id, int emergencia, int valor) {
 
-   TranviaEntity tranvia =em.find(TranviaEntity.class, id);
+   TranviaEntity tranvia =em.find(TranviaEntity.class, Long.parseLong(id));
          
          //modifico el nivel de choque
         if(emergencia==1)
