@@ -496,9 +496,16 @@ function graficasyReporte(data)
     
       var latitud=data;
                           var rta="<font color=\"white\"> <h2> Reporte </h2> </font> ";
+                          rta+="<br> <br>";
                           var masRapidoA ;
                           var masRapidoB ;
                           var masRapidoC ;
+                          
+                           var proA ;
+                          var proB ;
+                          var proC ;
+                          
+                          
                           var menosRapidoA ;
                           var menosRapidoB ;
                           var menosRapidoC ;
@@ -506,9 +513,33 @@ function graficasyReporte(data)
                           $.each(data, function(index,value){
                          
                   
-                          
+                        
                            var n = value.includes("mas efectivo");
                            var d = value.includes("menos efectivo")
+                            var e = value.includes("El trayecto A")
+                            
+                            if(e)
+                            {
+                                 var res = value.split(" ");
+                             proA=res[4];   
+                           
+                            }
+                            
+                              var f = value.includes("El trayecto B")
+                            
+                            if(f)
+                            {
+                             var res = value.split(" ");
+                             proB=res[4]; 
+                            }
+                            
+                              var g = value.includes("El trayecto C")
+                            
+                            if(g)
+                            {
+                             var res = value.split(" ");
+                             proC=res[4];   
+                            }
                            
                            if(n)
                               {
@@ -518,7 +549,7 @@ function graficasyReporte(data)
                                         
                                         
                                         var res = value.split(" ");
-                                        masRapidoA=res[17] ;
+                                        masRapidoA= parseFloat(res[17]) ;
                                         //rta+=res[17] ;
                                         // rta+=value ;
                                         
@@ -529,7 +560,7 @@ function graficasyReporte(data)
                                         
                                         
                                         var res = value.split(" ");
-                                        masRapidoB=res[17] ;
+                                        masRapidoB=parseFloat(res[17]) ;
                                         //rta+=res[17] ;
                                         
                                    }
@@ -539,7 +570,7 @@ function graficasyReporte(data)
                                         
                                         
                                         var res = value.split(" ");
-                                        masRapidoC=res[17] ;
+                                        masRapidoC=parseFloat(res[17]) ;
                                         //rta+=res[17] ;
                                         
                                    }
@@ -556,7 +587,7 @@ function graficasyReporte(data)
                                         
                                         
                                         var res = value.split(" ");
-                                        menosRapidoA=res[17] ;
+                                        menosRapidoA=parseFloat(res[17]) ;
                                         //rta+=res[17] ;
                                         
                                    }
@@ -566,7 +597,7 @@ function graficasyReporte(data)
                                         
                                         
                                         var res = value.split(" ");
-                                        menosRapidoB=res[17] ;
+                                        menosRapidoB=parseFloat(res[17]) ;
                                         //rta+=res[17] ;
                                         
                                    }
@@ -576,7 +607,7 @@ function graficasyReporte(data)
                                         
                                         
                                         var res = value.split(" ");
-                                        menosRapidoC=res[17] ;
+                                        menosRapidoC=parseFloat(res[17]) ;
                                         //rta+=res[17] ;
                                          //rta+=value ;
                                    }
@@ -588,12 +619,72 @@ function graficasyReporte(data)
                            
                      });
                      
+                     
+                     
+                     
+                     var a3 = parseFloat(proA);
+                     var b3 = parseFloat(proB);
+                     var c3 = parseFloat(proC);
+                     
+                     var suma3= a3+b3+c3 ;
+                      var pproA = a3*200/(suma3);
+                          var pproB= b3*200/(suma3);
+                          var pproC =c3*200/(suma3);;
+                          
+                          
+                          
+                                   
+                                 
+                                   
+                                   
+                                   
+                          
+                     
+                     rta+="<h2 align=\"center\" > Cantidad de problemas por ruta</h2>" ;
+                     rta+="<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\">";
+                     rta+="<table align=\"center\" cellpadding=\"2\" cellspacing=\"2\" border=\"0\"> <tbody align=\"center\"><tr>";
+                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+pproA+"px; background-color:#BDDA4C\">&nbsp;</div></td>";
+                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+pproB+"px; background-color:#FF9A68\">&nbsp;</div></td>";
+                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+pproC+"px; background-color:#69ABBF\">&nbsp;</div></td>";
+                     rta+=" </tr> <tr>";
+                     rta+="<td>"+proA+"</td>";
+                     rta+="<td>"+proB+"</td>";
+                     rta+="<td>"+proC+"</td>";
+                     rta+=" </tr><tr>";
+                     rta+="<td><strong><div class=\"verticalmente\">Ruta A</div></strong></td>";
+                     rta+="<td><strong><div class=\"verticalmente\">Ruta B</div></strong></td>";
+                     rta+="<td><strong><div class=\"verticalmente\">Ruta C</div></strong></td>";
+                     rta+=" </tr></tbody></table><br><br><br> <br> <br>  <br> <br>";
+                     
+                     
+                  
+                     var a = parseFloat(masRapidoA);
+                     var b = parseFloat(masRapidoB);
+                     var c = parseFloat(masRapidoC);
+                     
+                     var suma= a+b+c ;
+                      var pmasRapidoA = a*200/(suma);
+                          var pmasRapidoB= b*200/(suma);
+                          var pmasRapidoC =c*200/(suma);;
+                          
+                          
+                             masRapidoA=masRapidoA.toFixed(3);
+                              masRapidoB=  masRapidoB.toFixed(3);
+                                   masRapidoC=masRapidoC.toFixed(2);
+                                   
+                                   
+                                 
+                                   
+                                   
+                                   
+                          
+                     
                      rta+="<h2 align=\"center\" > Tiempo conductor mas efectivo por ruta </h2>" ;
                      rta+="<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\">";
                      rta+="<table align=\"center\" cellpadding=\"2\" cellspacing=\"2\" border=\"0\"> <tbody align=\"center\"><tr>";
-                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+masRapidoA+"px; background-color:#BDDA4C\">&nbsp;</div></td>";
-                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+masRapidoB+"px; background-color:#FF9A68\">&nbsp;</div></td>";
-                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+masRapidoC+"px; background-color:#69ABBF\">&nbsp;</div></td>";
+                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+pmasRapidoA+"px; background-color:#BDDA4C\">&nbsp;</div></td>";
+                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+pmasRapidoB+"px; background-color:#FF9A68\">&nbsp;</div></td>";
+                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+pmasRapidoC+"px; background-color:#69ABBF\">&nbsp;</div></td>";
                      rta+=" </tr> <tr>";
                      rta+="<td>"+masRapidoA+"</td>";
                      rta+="<td>"+masRapidoB+"</td>";
@@ -602,7 +693,43 @@ function graficasyReporte(data)
                      rta+="<td><strong><div class=\"verticalmente\">Ruta A</div></strong></td>";
                      rta+="<td><strong><div class=\"verticalmente\">Ruta B</div></strong></td>";
                      rta+="<td><strong><div class=\"verticalmente\">Ruta C</div></strong></td>";
-                     rta+=" </tr></tbody></table><br><br><br> <br> <br>";
+                     rta+=" </tr></tbody></table><br><br><br> <br> <br>  <br> <br>";
+                     
+                     
+                     
+                     
+                     
+                     var a2 = parseFloat(menosRapidoA);
+                     var b2 = parseFloat(menosRapidoB);
+                     var c2 = parseFloat(menosRapidoC);
+                     
+                     var suma2= a2+b2+c2 ;
+                      var pmenosRapidoA = a2*200/(suma2);
+                          var pmenosRapidoB= b2*200/(suma2);
+                          var pmenosRapidoC =c2*200/(suma2);;
+                          
+                          
+                          menosRapidoA=menosRapidoA.toFixed(3);
+                              menosRapidoB=  menosRapidoB.toFixed(3);
+                                   menosRapidoC=menosRapidoC.toFixed(2);
+                          
+                          
+                     
+                     rta+="<h2 align=\"center\" > Tiempo conductor menos efectivo por ruta </h2>" ;
+                     rta+="<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\">";
+                     rta+="<table align=\"center\" cellpadding=\"2\" cellspacing=\"2\" border=\"0\"> <tbody align=\"center\"><tr>";
+                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+pmenosRapidoA+"px; background-color:#BDDA4C\">&nbsp;</div></td>";
+                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+pmenosRapidoB+"px; background-color:#FF9A68\">&nbsp;</div></td>";
+                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+pmenosRapidoC+"px; background-color:#69ABBF\">&nbsp;</div></td>";
+                     rta+=" </tr> <tr>";
+                     rta+="<td>"+menosRapidoA+"</td>";
+                     rta+="<td>"+menosRapidoB+"</td>";
+                     rta+="<td>"+menosRapidoC+"</td>";
+                     rta+=" </tr><tr>";
+                     rta+="<td><strong><div class=\"verticalmente\">Ruta A</div></strong></td>";
+                     rta+="<td><strong><div class=\"verticalmente\">Ruta B</div></strong></td>";
+                     rta+="<td><strong><div class=\"verticalmente\">Ruta C</div></strong></td>";
+                     rta+=" </tr></tbody></table><br><br><br> <br> <br>  <br> <br>";
                      
                      
                      

@@ -256,16 +256,16 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
    
    int mayorProblema = Math.max(maso, problemaTipoC);
    
-   String ta = "El trayecto A presenta ";
+   String ta = "El trayecto";
    
    String pp = " problemas <p>" ;
    
-    String met7=ta+ problemaTipoA +pp ;
+    String met7=ta+" A presenta "+ problemaTipoA +pp ;
     enviar.add(met7);
    
-     String met8=ta+ problemaTipoB +pp ;
+     String met8=ta+" B presenta "+ problemaTipoB +pp ;
     enviar.add(met8);
-      String met9=ta+ problemaTipoC +pp ;
+      String met9=ta+" C presenta " +problemaTipoC +pp ;
      enviar.add(met9);
        String met10="El trayecto que mas presenta problemas tiene "+ mayorProblema +" problemas <p>" ;
    enviar.add(met10);
