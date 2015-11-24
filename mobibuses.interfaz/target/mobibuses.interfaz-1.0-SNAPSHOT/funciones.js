@@ -443,7 +443,7 @@ function setMarkers(map,data) {
               var contenido="";
                 
               
-          if(nivelChoque>2 || nivelPanico>2 || nivelTemperatura>2)
+          if(nivelChoque>50 || nivelPanico>50 || nivelTemperatura>50)
           {
                imagen="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=caution|#00FFBF";
                contenido="el vehiculo "+value.nombre+" se encuentra en estado de emergencia"+"<p>"+"<button name=\"busquedaMasCercano\" id=\"busquedaMasCercano\" onclick=\"busquedaMasCercano("+latitud+","+longitud+"); return false;\"> Buscar bus mas cercano </button>";
@@ -497,6 +497,8 @@ function graficasyReporte(data)
       var latitud=data;
                           var rta="<font color=\"white\"> <h2> Reporte </h2> </font> ";
                           rta+="<br> <br>";
+                          var promedios="";
+                          var veces=0 ;
                           var masRapidoA ;
                           var masRapidoB ;
                           var masRapidoC ;
@@ -517,6 +519,13 @@ function graficasyReporte(data)
                            var n = value.includes("mas efectivo");
                            var d = value.includes("menos efectivo")
                             var e = value.includes("El trayecto A")
+                            
+                            
+                            if(veces<4)
+                            {
+                                promedios+= "<font color=\"white\"> <h4 align=\"center\" > "+value+" </h4> </font> ";
+                                veces++;
+                            }
                             
                             if(e)
                             {
@@ -627,9 +636,9 @@ function graficasyReporte(data)
                      var c3 = parseFloat(proC);
                      
                      var suma3= a3+b3+c3 ;
-                      var pproA = a3*200/(suma3);
-                          var pproB= b3*200/(suma3);
-                          var pproC =c3*200/(suma3);;
+                      var pproA = a3*100/(suma3);
+                          var pproB= b3*100/(suma3);
+                          var pproC =c3*100/(suma3);;
                           
                           
                           
@@ -733,7 +742,7 @@ function graficasyReporte(data)
                      
                      
                      
-                     
+                     rta+=promedios;
                      
                      
                      
