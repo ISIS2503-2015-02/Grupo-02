@@ -12,6 +12,7 @@ import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioEstacionVcubMock
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -34,8 +35,6 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class EstacionVcubService 
 {
-    
-    private static final String TOKEN ="token";
 
     @EJB
     private IServicioEstacionVcubMockLocal estacionesEjb;
@@ -44,36 +43,22 @@ public class EstacionVcubService
     @Path("estaciones/")
     public List<EstacionVcub> darEstaciones(@Context HttpHeaders headers)
     {
-         String token = "";
-         try {
-             token = headers.getRequestHeader(TOKEN ).get(0);
-         } catch (Exception e) {
-         }
-        return estacionesEjb.darEstacionesVcub(token);
+        return estacionesEjb.darEstacionesVcub();
     }
      @GET
     @Path("vcubes/")
+     @PermitAll
     public List<Vcub> darVcubes(@Context HttpHeaders headers)
     {
-         String token = "";
-         try {
-             token = headers.getRequestHeader(TOKEN ).get(0);
-         } catch (Exception e) {
-         }
-        return estacionesEjb.darTodosVcub(token);
+        return estacionesEjb.darTodosVcub();
     }
     
     @PUT
     @Path("estacion/{id}/alquilar")
     public Vcub alquilarVcub(@PathParam("id") int id,@Context HttpHeaders headers)
     {
-         String token = "";
-         try {
-             token = headers.getRequestHeader(TOKEN ).get(0);
-         } catch (Exception e) {
-         }
         try {
-           return estacionesEjb.alquilarVcub(id,token);
+           return estacionesEjb.alquilarVcub(id);
         } catch (OperacionInvalidaException ex) {
             Logger.getLogger(EstacionVcubService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,13 +69,8 @@ public class EstacionVcubService
     @Path("estacion/{id}/liberar/{idvcub}")
     public Vcub liberarVcub(@PathParam("id") int id, @PathParam("idvcub") int idvcub,@Context HttpHeaders headers)
     {
-         String token = "";
-         try {
-             token = headers.getRequestHeader(TOKEN ).get(0);
-         } catch (Exception e) {
-         }
         try {
-          return  estacionesEjb.liberarVcub(id, idvcub,token);
+          return  estacionesEjb.liberarVcub(id, idvcub);
         } catch (OperacionInvalidaException ex) {
             Logger.getLogger(EstacionVcubService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -101,81 +81,47 @@ public class EstacionVcubService
     @Path("vcubes/{id}")
     public List<Vcub> darVcubesEstacion(@PathParam("id") int idest,@Context HttpHeaders headers)
     {
-         String token = "";
-         try {
-             token = headers.getRequestHeader(TOKEN ).get(0);
-         } catch (Exception e) {
-         }
-        return estacionesEjb.darVcubesEstacion(idest,token);
+        return estacionesEjb.darVcubesEstacion(idest);
     }
     
     @PUT
     @Path("estacion/{id}/reducir")
     public void reducirCapacidadEstacionEspecifica(@PathParam("id") int idest,@Context HttpHeaders headers)
     {
-        String token = "";
-         try {
-             token = headers.getRequestHeader(TOKEN ).get(0);
-         } catch (Exception e) {
-         }
-        estacionesEjb.reducirVcubesEspecifica(idest,token);
+        estacionesEjb.reducirVcubesEspecifica(idest);
     }
     
     @PUT
     @Path("estacion/reducir")
     public void reducirCapacidadEstaciones(@Context HttpHeaders headers)
     {
-         String token = "";
-         try {
-             token = headers.getRequestHeader(TOKEN ).get(0);
-         } catch (Exception e) {
-         }
-        estacionesEjb.reducirVcubesTodas(token);
+        estacionesEjb.reducirVcubesTodas();
     }
      @GET
     @Path("vcubes/disponibles/{id}")
     public List<Vcub> darVcubesDisponiblesEstacion(@PathParam("id") int idest,@Context HttpHeaders headers)
     {
-         String token = "";
-         try {
-             token = headers.getRequestHeader(TOKEN ).get(0);
-         } catch (Exception e) {
-         }
-        return estacionesEjb.darVcubesDisponiblesEstacion(idest,token);
+        return estacionesEjb.darVcubesDisponiblesEstacion(idest);
     }
     @GET
     @Path("vcubes/ocupados/{id}")
     public List<Vcub> darVcubesOcupadosEstacion(@PathParam("id") int idest,@Context HttpHeaders headers)
     {
-         String token = "";
-         try {
-             token = headers.getRequestHeader(TOKEN ).get(0);
-         } catch (Exception e) {
-         }
-        return estacionesEjb.darVcubesOcupadosEstacion(idest,token);
+        return estacionesEjb.darVcubesOcupadosEstacion(idest);
     }
     @GET
     @Path("vcubes/nodisponibles/{id}")
     public List<Vcub> darVcubesNoDisponiblesEstacion(@PathParam("id") int idest,@Context HttpHeaders headers)
     {
-         String token = "";
-         try {
-             token = headers.getRequestHeader(TOKEN ).get(0);
-         } catch (Exception e) {
-         }
-        return estacionesEjb.darVcubesNoDisponiblesEstacion(idest,token);
+ 
+        return estacionesEjb.darVcubesNoDisponiblesEstacion(idest);
     }
     
      @PUT
     @Path("vcub/{id}/{longitud}_{latitud}")
     public Vcub cambiarPosVcub(@PathParam("id") int idest,@PathParam("longitud")double longi,@PathParam("latitud") double lati,@Context HttpHeaders headers)
     {
-         String token = "";
-         try {
-             token = headers.getRequestHeader(TOKEN ).get(0);
-         } catch (Exception e) {
-         }
-       
-        return estacionesEjb.modificarPosVcub(idest, longi, lati,token);
+ 
+        return estacionesEjb.modificarPosVcub(idest, longi, lati);
     }
 }

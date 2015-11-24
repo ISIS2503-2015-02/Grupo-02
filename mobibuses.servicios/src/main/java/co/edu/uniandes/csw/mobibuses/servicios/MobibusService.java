@@ -51,7 +51,7 @@ public class MobibusService {
              token = headers.getRequestHeader(TOKEN ).get(0);
          } catch (Exception e) {
          }
-                   return mobibusEjb.darMobibuses(token );
+                   return mobibusEjb.darMobibuses();
  
     }
     
@@ -60,12 +60,7 @@ public class MobibusService {
     
     public Mobibus darMobiBusMasCercanoA(@PathParam("coordenada1") double coordenada1,@PathParam("coordenada2")double coordenada2,@Context HttpHeaders headers)
     {
-         String token = "";
-         try {
-             token = headers.getRequestHeader(TOKEN ).get(0);
-         } catch (Exception e) {
-         }
-        return mobibusEjb.darMobibusMasCercano(coordenada1, coordenada2,token );
+        return mobibusEjb.darMobibusMasCercano(coordenada1, coordenada2 );
         
     }
     
@@ -83,7 +78,7 @@ public class MobibusService {
          } catch (Exception e) {
          }
         try {
-            mobibusEjb.alquilarMobibus(id,token );
+            mobibusEjb.alquilarMobibus(id );
         } catch (OperacionInvalidaException ex) {
             Logger.getLogger(MobibusService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -98,7 +93,7 @@ public class MobibusService {
          } catch (Exception e) {
          }
         try {
-            mobibusEjb.liberarMobibus(id,token );
+            mobibusEjb.liberarMobibus(id );
         } catch (OperacionInvalidaException ex) {
             Logger.getLogger(MobibusService.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -113,7 +108,7 @@ public class MobibusService {
              token = headers.getRequestHeader(TOKEN ).get(0);
          } catch (Exception e) {
          }
-        mobibusEjb.agregarRuta(id, pDist, pTiempo,token ); 
+        mobibusEjb.agregarRuta(id, pDist, pTiempo ); 
     }
     
     @PUT 
@@ -125,7 +120,7 @@ public class MobibusService {
              token = headers.getRequestHeader(TOKEN ).get(0);
          } catch (Exception e) {
          }
-        mobibusEjb.eliminarRuta(idMobibus, idRuta,token ); 
+        mobibusEjb.eliminarRuta(idMobibus, idRuta ); 
     }
     
     @GET
@@ -137,7 +132,7 @@ public class MobibusService {
              token = headers.getRequestHeader(TOKEN ).get(0);
          } catch (Exception e) {
          }
-        return mobibusEjb.darReporteRutas(id,token );
+        return mobibusEjb.darReporteRutas(id );
         
     }
     
@@ -151,7 +146,7 @@ public class MobibusService {
          } catch (Exception e) {
          }  
          
-          return mobibusEjb.cambiarPosicion(idest, longi, lati,token );
+          return mobibusEjb.cambiarPosicion(idest, longi, lati);
           
       }
       
@@ -163,7 +158,7 @@ public class MobibusService {
              token = headers.getRequestHeader(TOKEN ).get(0);
          } catch (Exception e) {
          }
-          return mobibusEjb.cambiarKilo(idest, kilo,token );
+          return mobibusEjb.cambiarKilo(idest, kilo);
       }
       
       
@@ -177,7 +172,7 @@ public class MobibusService {
              token = headers.getRequestHeader(TOKEN ).get(0);
          } catch (Exception e) {
          }
-        return mobibusEjb.darMobibusMasCercanoBono(coordenada1, coordenada2,token );
+        return mobibusEjb.darMobibusMasCercanoBono(coordenada1, coordenada2 );
         
     }
     
