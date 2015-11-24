@@ -23,86 +23,73 @@ public interface IServicioMobibusLocal {
     
     /**
      * interface
-     * @param token
      * @return 
      */
     
-    public List<Mobibus> darMobibuses(String token);
+    public List<Mobibus> darMobibuses();
     
-    /**
-     * intercace
-     * @return 
-     */
-    
-     public List<Mobibus> darMobibuses1();
+  
      
      /**
       * interface
       * @param cordenada1
       * @param cordenada2
-      * @param token
       * @return 
       */
      
-     public Mobibus darMobibusMasCercano(double cordenada1, double cordenada2, String token);
+     public Mobibus darMobibusMasCercano(double cordenada1, double cordenada2);
      
      /**
       * interface
       * @param cordenada1
       * @param cordenada2
-      * @param token
       * @return 
       */
      
-      public List<Mobibus> darMobibusMasCercanoBono(double cordenada1, double cordenada2, String token);
+      public List<Mobibus> darMobibusMasCercanoBono(double cordenada1, double cordenada2);
       
       
       /**
        * interface
        * @param id
-       * @param token
        * @throws OperacionInvalidaException 
        */
      
-      public void alquilarMobibus(int id,String token)  throws OperacionInvalidaException;
+      public void alquilarMobibus(int id)  throws OperacionInvalidaException;
       
       
       /**
        * interface
        * @param id
-       * @param token
        * @throws OperacionInvalidaException 
        */
       
-      public void liberarMobibus(int id,String token) throws OperacionInvalidaException;
+      public void liberarMobibus(int id) throws OperacionInvalidaException;
       
       /**
        * interface
        * @param idMobibus
        * @param pDist
-       * @param ptiempo
-       * @param token 
+       * @param ptiempo 
        */
       
-      public void agregarRuta(int idMobibus, int pDist, int ptiempo,String token);
+      public void agregarRuta(int idMobibus, int pDist, int ptiempo);
       
       /**
        * interface
        * @param idMobibus
        * @param idRuta
-       * @param token 
        */
       
-      public void eliminarRuta(int idMobibus, int idRuta,String token);
+      public void eliminarRuta(int idMobibus, int idRuta);
       
       /**
        * interface
        * @param id
-       * @param token
        * @return 
        */
       
-      public String darReporteRutas(int id,String token);
+      public String darReporteRutas(int id);
       
       
       /**
@@ -110,21 +97,20 @@ public interface IServicioMobibusLocal {
        * @param id
        * @param longi
        * @param lat
-       * @param token
        * @return 
        */
       
-      public Mobibus cambiarPosicion(int id,double longi , double lat,String token);
+      public Mobibus cambiarPosicion(int id,double longi , double lat);
       
       
       /**
        * interface
        * @param id
        * @param kilo
-       * @param token
+
        * @return 
        */
       
-      public Mobibus cambiarKilo(int id,double kilo,String token);
+      public Mobibus cambiarKilo(int id,double kilo);
      
 }

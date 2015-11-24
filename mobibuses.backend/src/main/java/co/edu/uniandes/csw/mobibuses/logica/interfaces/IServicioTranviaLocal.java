@@ -21,45 +21,36 @@ public interface IServicioTranviaLocal {
     
     /**
      * interface
-     * @param token
      * @return 
      */
     
-    public List<Tranvia> darTranvias(String token);
+    public List<Tranvia> darTranvias();
     
     /**
      * interface
      * @param id
      * @param emergencia
      * @param valor
-     * @param token 
      */
     
-    public void cambiarEstado(String id, int emergencia , int valor, String token);
+    public void cambiarEstado(String id, int emergencia , int valor);
     
     /**
      * interface
-     * @param token
      * @return 
      */
     
-    public String generarReporte(String token);
+    public String generarReporte();
     
     /**
      * interface
      * @param id
      * @param co1
      * @param co2
-     * @param token 
+
      */
     
-    public void cambiarCoord(String id , double co1 , double co2, String token);
+    public void cambiarCoord(String id , double co1 , double co2);
     
-    /**
-     * interface
-     * @return 
-     */
-    
-     public List<Tranvia> darTranvias1() ;
-    
+  
 }

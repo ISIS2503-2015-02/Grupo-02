@@ -22,21 +22,19 @@ public interface IServicioEstacionVcubMockLocal
     
     /**
      * interface
-     * @param token
      * @return 
      */
     
-    public List<EstacionVcub> darEstacionesVcub( String token);
+    public List<EstacionVcub> darEstacionesVcub( );
     
     /**
      * interface
      * @param idestacion
-     * @param token
      * @return 
      */
     
     
-    public List<Vcub> darVcubesEstacion(int idestacion, String token);
+    public List<Vcub> darVcubesEstacion(int idestacion);
     
     /**
      * interface
@@ -44,55 +42,42 @@ public interface IServicioEstacionVcubMockLocal
      * @return 
      */
     
-    public List<Vcub> darTodosVcub(String token);
+    public List<Vcub> darTodosVcub();
     
-    
-    
-    /**
-     * interface
-     * @return 
-     */
-    
-    public List<Vcub> darTodosVcub1();
-    
-    
+
     /**
      * interface
      * @param idestacion
-     * @param token
      * @return
      * @throws OperacionInvalidaException 
      */
     
-    public Vcub alquilarVcub(int idestacion, String token)throws OperacionInvalidaException;
+    public Vcub alquilarVcub(int idestacion)throws OperacionInvalidaException;
     
     
     /**
      * interface
      * @param idestacion
      * @param iddevolver
-     * @param token
      * @return
      * @throws OperacionInvalidaException 
      */
     
-    public Vcub liberarVcub(int idestacion,int iddevolver, String token) throws OperacionInvalidaException;
+    public Vcub liberarVcub(int idestacion,int iddevolver) throws OperacionInvalidaException;
     
     /**
      * interface
-     * @param token 
      */
     
-    public void reducirVcubesTodas( String token);
+    public void reducirVcubesTodas( );
     
     
     /**
      * interface
      * @param idestacion
-     * @param token 
      */
     
-    public void reducirVcubesEspecifica(int idestacion, String token);
+    public void reducirVcubesEspecifica(int idestacion);
     
     /**
      * interface
@@ -101,34 +86,31 @@ public interface IServicioEstacionVcubMockLocal
      * @return 
      */
     
-    public List<Vcub> darVcubesDisponiblesEstacion(int idestacion, String token);
+    public List<Vcub> darVcubesDisponiblesEstacion(int idestacion);
     
     /**
      * interface
      * @param idestacion
-     * @param token
      * @return 
      */
     
-    public List<Vcub> darVcubesOcupadosEstacion(int idestacion, String token);
+    public List<Vcub> darVcubesOcupadosEstacion(int idestacion);
     
     /**
      * interface
      * @param idestacion
-     * @param token
      * @return 
      */
     
-    public List<Vcub> darVcubesNoDisponiblesEstacion(int idestacion, String token);
+    public List<Vcub> darVcubesNoDisponiblesEstacion(int idestacion);
     
     /**
      * interface
      * @param idVcub
      * @param longitud
      * @param latitud
-     * @param token
      * @return 
      */
     
-    public Vcub modificarPosVcub(int idVcub, double longitud, double latitud, String token);
+    public Vcub modificarPosVcub(int idVcub, double longitud, double latitud);
 }
