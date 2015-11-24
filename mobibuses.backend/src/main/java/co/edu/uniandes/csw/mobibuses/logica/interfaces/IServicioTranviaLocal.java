@@ -40,7 +40,7 @@ public interface IServicioTranviaLocal {
      * @return 
      */
     
-    public String generarReporte();
+    public List<String> generarReporte();
     
     /**
      * interface

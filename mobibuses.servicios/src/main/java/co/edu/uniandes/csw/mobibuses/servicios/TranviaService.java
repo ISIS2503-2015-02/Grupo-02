@@ -50,7 +50,7 @@ public class TranviaService {
     
     @GET
     @Path("tranvias/generarReportes")
-    public String generarReporteDeTranvias( @Context HttpHeaders headers)
+    public List<String> generarReporteDeTranvias( @Context HttpHeaders headers)
     {
    
         return tranviaEjb.generarReporte();

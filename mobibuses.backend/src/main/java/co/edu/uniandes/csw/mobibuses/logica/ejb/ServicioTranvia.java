@@ -100,8 +100,11 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
      */
     
     @Override
-    public String generarReporte() {
+    public List<String> generarReporte() {
 
+        
+        List<String> enviar = new ArrayList<String>();
+        
     String rta="";
     
     List<Tranvia> lista =darTranvias();
@@ -136,8 +139,8 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     for(Tranvia tra:lista)
     {
 
-        rta+="El tiempo promedio del tranvia " + tra.getNombre()+ " es " + tra.getTimepoPromedio() +"<p>";
-        
+       String  meter="El tiempo promedio del tranvia " + tra.getNombre()+ " es " + tra.getTimepoPromedio() +"<p>";
+        enviar.add(meter);
         //ruta A
         
       
@@ -231,23 +234,23 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
         
     
     }
-    String mas = "El conductor mas efectivo es ";
-    String menos = "El conductor menos efectivo es ";
+    String mas = "El conductor mas efectivo  ";
+    String menos = "El conductor menos efectivo  ";
     String tran = " con el tranvia";
     String tiempo =" con un tiempo de ";
-    rta+=mas+ conductorMasEFectivoA.getNombre() +tran + conductorMasEFectivoA.getNombre()+ tiempo + conductorMasEFectivoA.getTimepoPromedio()+"<p>";
+    String met1=mas+"de la ruta A "+ conductorMasEFectivoA.getNombre() +tran + conductorMasEFectivoA.getNombre()+ tiempo + conductorMasEFectivoA.getTimepoPromedio()+"<p>";
+     enviar.add(met1);
+     String met2=menos+"de la ruta A "+ conductorMenosEFectivoA.getNombre() +tran + conductorMenosEFectivoA.getNombre()+ tiempo + conductorMenosEFectivoA.getTimepoPromedio()+"<p>";
+    enviar.add(met2);
+     String met3=mas+"de la ruta B "+ conductorMasEFectivoB.getNombre() +tran + conductorMasEFectivoB.getNombre()+ tiempo+ conductorMasEFectivoB.getTimepoPromedio()+"<p>";
+    enviar.add(met3);
+     String met4=menos+"de la ruta B "+ conductorMenosEFectivoB.getNombre() +tran + conductorMenosEFectivoB.getNombre()+ tiempo+ conductorMenosEFectivoB.getTimepoPromedio()+"<p>";
+   enviar.add(met4);
     
-    rta+=menos+ conductorMenosEFectivoA.getNombre() +tran + conductorMenosEFectivoA.getNombre()+ tiempo + conductorMenosEFectivoA.getTimepoPromedio()+"<p>";
-    
-    rta+=mas+ conductorMasEFectivoB.getNombre() +tran + conductorMasEFectivoB.getNombre()+ tiempo+ conductorMasEFectivoB.getTimepoPromedio()+"<p>";
-    
-    rta+=menos+ conductorMenosEFectivoB.getNombre() +tran + conductorMenosEFectivoB.getNombre()+ tiempo+ conductorMenosEFectivoB.getTimepoPromedio()+"<p>";
-   
-    
-    rta+=mas+ conductorMasEFectivoC.getNombre() +tran+ conductorMasEFectivoC.getNombre()+ tiempo + conductorMasEFectivoC.getTimepoPromedio()+"<p>";
-    
-    rta+=menos+ conductorMenosEFectivoC.getNombre() +tran + conductorMenosEFectivoC.getNombre()+ tiempo + conductorMenosEFectivoC.getTimepoPromedio()+"<p>";
-   
+     String met5=mas+"de la ruta C "+ conductorMasEFectivoC.getNombre() +tran+ conductorMasEFectivoC.getNombre()+ tiempo + conductorMasEFectivoC.getTimepoPromedio()+"<p>";
+    enviar.add(met5);
+     String met6=menos+"de la ruta C "+ conductorMenosEFectivoC.getNombre() +tran + conductorMenosEFectivoC.getNombre()+ tiempo + conductorMenosEFectivoC.getTimepoPromedio()+"<p>";
+   enviar.add(met6);
     
    int maso =  Math.max(problemaTipoA, problemaTipoB);
    
@@ -257,30 +260,31 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
    
    String pp = " problemas <p>" ;
    
-   rta+=ta+ problemaTipoA +pp ;
+    String met7=ta+ problemaTipoA +pp ;
+    enviar.add(met7);
    
-    rta+=ta+ problemaTipoB +pp ;
-    
-     rta+=ta+ problemaTipoC +pp ;
-     
-      rta+="El trayecto que mas presenta problemas tiene "+ mayorProblema +" problemas <p>" ;
-   
+     String met8=ta+ problemaTipoB +pp ;
+    enviar.add(met8);
+      String met9=ta+ problemaTipoC +pp ;
+     enviar.add(met9);
+       String met10="El trayecto que mas presenta problemas tiene "+ mayorProblema +" problemas <p>" ;
+   enviar.add(met10);
      int masoEmer =  Math.max(problemasChoque, problemasPanico);
    
    int mayorProblemaEmer = Math.max(masoEmer, problemasTemperatura);
    
    String ha = "Ha habido  ";
       
-   rta+=ha+ problemasTemperatura +" emergencias por temperatura <p>" ;
-   
-    rta+=ha+ problemasChoque +" emergencias por choque <p>" ;
-    
-     rta+=ha+ problemasPanico +" emergencias por panico <p>" ;
-     
-     rta+="La emergencia mas concurrida ha sucedido "+mayorProblemaEmer + " veces" ;
-     
+    String met11=ha+ problemasTemperatura +" emergencias por temperatura <p>" ;
+   enviar.add(met11);
+     String met12=ha+ problemasChoque +" emergencias por choque <p>" ;
+    enviar.add(met12);
+      String met13=ha+ problemasPanico +" emergencias por panico <p>" ;
+     enviar.add(met13);
+      String met14="La emergencia mas concurrida ha sucedido "+mayorProblemaEmer + " veces" ;
+     enviar.add(met14);
 
-    return rta ;
+    return enviar ;
     }
 
     

@@ -491,6 +491,133 @@ function setMarkers(map,data) {
  
 }
 
+function graficasyReporte(data)
+{
+    
+      var latitud=data;
+                          var rta="<font color=\"white\"> <h2> Reporte </h2> </font> ";
+                          var masRapidoA ;
+                          var masRapidoB ;
+                          var masRapidoC ;
+                          var menosRapidoA ;
+                          var menosRapidoB ;
+                          var menosRapidoC ;
+                          
+                          $.each(data, function(index,value){
+                         
+                  
+                          
+                           var n = value.includes("mas efectivo");
+                           var d = value.includes("menos efectivo")
+                           
+                           if(n)
+                              {
+                                  if(value.includes("ruta A"))
+                                   {
+                                        
+                                        
+                                        
+                                        var res = value.split(" ");
+                                        masRapidoA=res[17] ;
+                                        //rta+=res[17] ;
+                                        // rta+=value ;
+                                        
+                                   }
+                                   if(value.includes("ruta B"))
+                                   {
+                                        
+                                        
+                                        
+                                        var res = value.split(" ");
+                                        masRapidoB=res[17] ;
+                                        //rta+=res[17] ;
+                                        
+                                   }
+                                   if(value.includes("ruta C"))
+                                   {
+                                        
+                                        
+                                        
+                                        var res = value.split(" ");
+                                        masRapidoC=res[17] ;
+                                        //rta+=res[17] ;
+                                        
+                                   }
+                                   
+                                 
+                              } 
+                              
+                              
+                              if(d)
+                              {
+                                  if(value.includes("ruta A"))
+                                   {
+                                        
+                                        
+                                        
+                                        var res = value.split(" ");
+                                        menosRapidoA=res[17] ;
+                                        //rta+=res[17] ;
+                                        
+                                   }
+                                   if(value.includes("ruta B"))
+                                   {
+                                        
+                                        
+                                        
+                                        var res = value.split(" ");
+                                        menosRapidoB=res[17] ;
+                                        //rta+=res[17] ;
+                                        
+                                   }
+                                   if(value.includes("ruta C"))
+                                   {
+                                        
+                                        
+                                        
+                                        var res = value.split(" ");
+                                        menosRapidoC=res[17] ;
+                                        //rta+=res[17] ;
+                                         //rta+=value ;
+                                   }
+                                   
+                                 
+                              } 
+                           
+                           
+                           
+                     });
+                     
+                     rta+="<h2 align=\"center\" > Tiempo conductor mas efectivo por ruta </h2>" ;
+                     rta+="<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\">";
+                     rta+="<table align=\"center\" cellpadding=\"2\" cellspacing=\"2\" border=\"0\"> <tbody align=\"center\"><tr>";
+                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+masRapidoA+"px; background-color:#BDDA4C\">&nbsp;</div></td>";
+                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+masRapidoB+"px; background-color:#FF9A68\">&nbsp;</div></td>";
+                     rta+="<td valign=\"bottom\"><div class=\"barrasv\" style=\"height:"+masRapidoC+"px; background-color:#69ABBF\">&nbsp;</div></td>";
+                     rta+=" </tr> <tr>";
+                     rta+="<td>"+masRapidoA+"</td>";
+                     rta+="<td>"+masRapidoB+"</td>";
+                     rta+="<td>"+masRapidoC+"</td>";
+                     rta+=" </tr><tr>";
+                     rta+="<td><strong><div class=\"verticalmente\">Ruta A</div></strong></td>";
+                     rta+="<td><strong><div class=\"verticalmente\">Ruta B</div></strong></td>";
+                     rta+="<td><strong><div class=\"verticalmente\">Ruta C</div></strong></td>";
+                     rta+=" </tr></tbody></table><br><br><br> <br> <br>";
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+               
+                     
+                     
+                     
+                       document.getElementById("reporte").innerHTML=rta;    
+    
+}
+
 function generarReporte()
 {
     
@@ -501,20 +628,13 @@ function generarReporte()
                     
                     
                   
-                    dataType: 'text'
+                     contentType: 'application/json',
                 }).done(function(data) {
                     
                    
-                    
+                    graficasyReporte(data);
                           
-                          var latitud=data;
-                          var rta="<font color=\"white\"> <h2> Reporte </h2> </font> ";
-                          rta+=data;
-                  
-                           document.getElementById("reporte").innerHTML=rta;
-                         
-                     
-                          
+                        
                           
                           
                           
